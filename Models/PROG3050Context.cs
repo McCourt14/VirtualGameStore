@@ -34,7 +34,7 @@ namespace VirtualGameStore.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\sqlexpress;Initial Catalog=PROG3050;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=.;Database=PROG3050;Trusted_Connection=True;User Id=sa;password=Conestoga1");
             }
         }
 
