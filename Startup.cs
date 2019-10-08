@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using VirtualGameStore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VirtualGameStore.Models;
 
 namespace VirtualGameStore
 {
@@ -33,6 +34,9 @@ namespace VirtualGameStore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddDbContext<PROG3050Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("PROG3050Connection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

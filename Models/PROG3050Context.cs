@@ -29,14 +29,17 @@ namespace VirtualGameStore.Models
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Wishlist> Wishlist { get; set; }
 
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=PROG3050;Trusted_Connection=True;User Id=sa;password=Conestoga1");
+                //optionsBuilder.UseSqlServer("Server=.;Database=PROG3050;Trusted_Connection=True;User Id=sa;password=Conestoga1");
+                optionsBuilder.UseSqlServer(@"server=.\sqlexpress;database=PROG3050;trusted_connection=true");
             }
         }
+        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
