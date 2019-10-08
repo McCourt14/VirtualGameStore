@@ -1,0 +1,71 @@
+﻿@model IEnumerable<VirtualGameStore.Models.Eventgame>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedUserid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedUserid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedUserid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedUserid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Eventid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.Title)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Eventgameid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Eventgameid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Eventgameid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,96 @@
+﻿@model VirtualGameStore.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DisplayName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisplayName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TryCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TryCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LockDatetime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LockDatetime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usertype)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usertype)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiveEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReceiveEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDatetime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDatetime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedUserid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedUserid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDatetime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDatetime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedUserid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedUserid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Person.FirstName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Userid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

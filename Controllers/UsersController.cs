@@ -1,0 +1,159 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using VirtualGameStore.Models;
+
+namespace VirtualGameStore.Controllers
+{
+    public class UsersController : Controller
+    {
+        private readonly PROG3050Context _context;
+
+        public UsersController(PROG3050Context context)
+        {
+            _context = context;
+        }
+
+        // GET: Users
+        public async Task<IActionResult> Index()
+        {
+            var pROG3050Context = _context.User.Include(u => u.Person);
+            return View(await pROG3050Context.ToListAsync());
+        }
+
+        // GET: Users/Details/5
+        public async Task<IActionResult> Details(decimal? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User
+                .Include(u => u.Person)
+                .FirstOrDefaultAsync(m => m.Userid == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        // GET: Users/Create
+        public IActionResult Create()
+        {
+            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName");
+            return View();
+        }
+
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Userid,DisplayName,StartDate,Personid,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
+            return View(user);
+        }
+
+        // GET: Users/Edit/5
+        public async Task<IActionResult> Edit(decimal? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
+            return View(user);
+        }
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(decimal id, [Bind("Userid,DisplayName,StartDate,Personid,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
+        {
+            if (id != user.Userid)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.Userid))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
+            return View(user);
+        }
+
+        // GET: Users/Delete/5
+        public async Task<IActionResult> Delete(decimal? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User
+                .Include(u => u.Person)
+                .FirstOrDefaultAsync(m => m.Userid == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        // POST: Users/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(decimal id)
+        {
+            var user = await _context.User.FindAsync(id);
+            _context.User.Remove(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool UserExists(decimal id)
+        {
+            return _context.User.Any(e => e.Userid == id);
+        }
+    }
+}

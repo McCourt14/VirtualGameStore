@@ -1,0 +1,94 @@
+﻿@model VirtualGameStore.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Userid" />
+            <div class="form-group">
+                <label asp-for="DisplayName" class="control-label"></label>
+                <input asp-for="DisplayName" class="form-control" />
+                <span asp-validation-for="DisplayName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Personid" class="control-label"></label>
+                <select asp-for="Personid" class="form-control" asp-items="ViewBag.Personid"></select>
+                <span asp-validation-for="Personid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TryCount" class="control-label"></label>
+                <input asp-for="TryCount" class="form-control" />
+                <span asp-validation-for="TryCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LockDatetime" class="control-label"></label>
+                <input asp-for="LockDatetime" class="form-control" />
+                <span asp-validation-for="LockDatetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Usertype" class="control-label"></label>
+                <input asp-for="Usertype" class="form-control" />
+                <span asp-validation-for="Usertype" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReceiveEmail" class="control-label"></label>
+                <input asp-for="ReceiveEmail" class="form-control" />
+                <span asp-validation-for="ReceiveEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDatetime" class="control-label"></label>
+                <input asp-for="CreatedDatetime" class="form-control" />
+                <span asp-validation-for="CreatedDatetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedUserid" class="control-label"></label>
+                <input asp-for="CreatedUserid" class="form-control" />
+                <span asp-validation-for="CreatedUserid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedDatetime" class="control-label"></label>
+                <input asp-for="UpdatedDatetime" class="form-control" />
+                <span asp-validation-for="UpdatedDatetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdatedUserid" class="control-label"></label>
+                <input asp-for="UpdatedUserid" class="form-control" />
+                <span asp-validation-for="UpdatedUserid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

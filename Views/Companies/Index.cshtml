@@ -1,0 +1,119 @@
+﻿@model IEnumerable<VirtualGameStore.Models.Company>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Province)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficePhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficePhone1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficePhone2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedUserid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedUserid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ceo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Province)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficePhone1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficePhone2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedUserid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedUserid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ceo.FirstName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Companyid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Companyid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Companyid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
