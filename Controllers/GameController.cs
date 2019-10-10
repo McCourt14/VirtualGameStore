@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +14,22 @@ namespace VirtualGameStore.Controllers
     public class GameController : Controller
     {
         private readonly PROG3050Context _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public GameController(PROG3050Context context)
+        public GameController(PROG3050Context context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Game
         public async Task<IActionResult> Index()
         {
+            IdentityUser identityUser = _userManager.GetUserAsync(User).Result;
+            if (User.Identity.IsAuthenticated && _userManager.IsInRoleAsync(identityUser, "administrators").Result)
+            {
+                ViewBag.isAdmin = "true";
+            }
             var pROG3050Context = _context.Game.Include(g => g.Category).Include(g => g.Company).Include(g => g.Platform);
             return View(await pROG3050Context.ToListAsync());
         }
@@ -28,6 +37,12 @@ namespace VirtualGameStore.Controllers
         // GET: Game/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {
+            IdentityUser identityUser = _userManager.GetUserAsync(User).Result;
+            if (User.Identity.IsAuthenticated && _userManager.IsInRoleAsync(identityUser, "administrators").Result)
+            {
+                ViewBag.isAdmin = "true";
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +64,12 @@ namespace VirtualGameStore.Controllers
         // GET: Game/Create
         public IActionResult Create()
         {
+            IdentityUser identityUser = _userManager.GetUserAsync(User).Result;
+            if (User.Identity.IsAuthenticated && _userManager.IsInRoleAsync(identityUser, "administrators").Result)
+            {
+                ViewBag.isAdmin = "true";
+            }
+
             ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid");
             ViewData["Companyid"] = new SelectList(_context.Company, "Companyid", "CompanyName");
             ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid");

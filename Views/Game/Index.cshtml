@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Game>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -6,9 +9,13 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -25,18 +32,6 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
@@ -49,7 +44,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -64,32 +60,23 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Category.Categoryid)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Company.CompanyName)
             </td>
-            <td>
+            <td\>
                 @Html.DisplayFor(modelItem => item.Platform.Platformid)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
-            </td>
-        </tr>
-}
+            </td\>
+                @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
