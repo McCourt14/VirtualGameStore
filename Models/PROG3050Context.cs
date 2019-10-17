@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -27,25 +24,23 @@ namespace VirtualGameStore.Models
         public virtual DbSet<Friends> Friends { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<Gamerates> Gamerates { get; set; }
-        public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Platform> Platform { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Wishlist> Wishlist { get; set; }
 
-        /*
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=.;Database=PROG3050;Trusted_Connection=True;User Id=sa;password=Conestoga1");
-                optionsBuilder.UseSqlServer(@"server=.\sqlexpress;database=PROG3050;trusted_connection=true");
-            }
-        }
-        */
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            if (!optionsBuilder.IsConfigured)
+        //            {
+        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+        //                optionsBuilder.UseSqlServer("Server=.;User Id=sa;password=Conestoga1;Database=PROG3050;Trusted_Connection=True;");
+        //            }
+        //        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("category");
@@ -93,9 +88,10 @@ namespace VirtualGameStore.Models
                     .HasColumnName("address2")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Ceoid)
-                    .HasColumnName("ceoid")
-                    .HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.CeoName)
+                    .IsRequired()
+                    .HasColumnName("ceo_name")
+                    .HasMaxLength(150);
 
                 entity.Property(e => e.City)
                     .HasColumnName("city")
@@ -146,12 +142,6 @@ namespace VirtualGameStore.Models
                 entity.Property(e => e.UpdatedUserid)
                     .HasColumnName("updated_userid")
                     .HasColumnType("numeric(18, 0)");
-
-                entity.HasOne(d => d.Ceo)
-                    .WithMany(p => p.Company)
-                    .HasForeignKey(d => d.Ceoid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_company_person");
             });
 
             modelBuilder.Entity<Creditcard>(entity =>
@@ -523,93 +513,6 @@ namespace VirtualGameStore.Models
                     .HasConstraintName("FK_gamerates_user");
             });
 
-            modelBuilder.Entity<Person>(entity =>
-            {
-                entity.HasKey(e => e.Psersonid);
-
-                entity.ToTable("person");
-
-                entity.Property(e => e.Psersonid)
-                    .HasColumnName("psersonid")
-                    .HasColumnType("numeric(18, 0)")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Address)
-                    .HasColumnName("address")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.Address2)
-                    .HasColumnName("address2")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.BirthDate)
-                    .HasColumnName("birth_date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.CellPhone)
-                    .HasColumnName("cell_phone")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.City)
-                    .HasColumnName("city")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Country)
-                    .HasColumnName("country")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.CreatedDatetime)
-                    .HasColumnName("created_datetime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.CreatedUserid)
-                    .HasColumnName("created_userid")
-                    .HasColumnType("numeric(18, 0)");
-
-                entity.Property(e => e.Email)
-                    .HasColumnName("email")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasColumnName("first_name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Gender)
-                    .HasColumnName("gender")
-                    .HasMaxLength(1);
-
-                entity.Property(e => e.HomePhone)
-                    .HasColumnName("home_phone")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasColumnName("last_name")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.OfficePhone)
-                    .HasColumnName("office_phone")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PostCode)
-                    .IsRequired()
-                    .HasColumnName("post_code")
-                    .HasMaxLength(10);
-
-                entity.Property(e => e.Province)
-                    .HasColumnName("province")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UpdatedDatetime)
-                    .HasColumnName("updated_datetime")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UpdatedUserid)
-                    .HasColumnName("updated_userid")
-                    .HasColumnType("numeric(18, 0)");
-            });
-
             modelBuilder.Entity<Platform>(entity =>
             {
                 entity.ToTable("platform");
@@ -649,6 +552,30 @@ namespace VirtualGameStore.Models
                     .HasColumnType("numeric(18, 0)")
                     .ValueGeneratedOnAdd();
 
+                entity.Property(e => e.Address)
+                    .HasColumnName("address")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.Address2)
+                    .HasColumnName("address2")
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("birth_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.CellPhone)
+                    .HasColumnName("cell_phone")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.City)
+                    .HasColumnName("city")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Country)
+                    .HasColumnName("country")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.CreatedDatetime)
                     .HasColumnName("created_datetime")
                     .HasColumnType("datetime");
@@ -661,22 +588,50 @@ namespace VirtualGameStore.Models
                     .HasColumnName("display_name")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.EndDate)
                     .HasColumnName("end_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.FirstName)
+                    .HasColumnName("first_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Gender)
+                    .HasColumnName("gender")
+                    .HasMaxLength(1);
+
+                entity.Property(e => e.HomePhone)
+                    .HasColumnName("home_phone")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.LockDatetime)
                     .HasColumnName("lock_datetime")
                     .HasColumnType("datetime");
+
+                entity.Property(e => e.OfficePhone)
+                    .HasColumnName("office_phone")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Personid)
-                    .HasColumnName("personid")
-                    .HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.PostCode)
+                    .HasColumnName("post_code")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.Province)
+                    .HasColumnName("province")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.ReceiveEmail)
                     .HasColumnName("receive_email")
@@ -702,11 +657,6 @@ namespace VirtualGameStore.Models
                     .IsRequired()
                     .HasColumnName("usertype")
                     .HasMaxLength(2);
-
-                entity.HasOne(d => d.Person)
-                    .WithMany(p => p.User)
-                    .HasForeignKey(d => d.Personid)
-                    .HasConstraintName("FK_user_person");
             });
 
             modelBuilder.Entity<Wishlist>(entity =>

@@ -1,17 +1,20 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Company>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Video Game Companies";
 }
 
-<h2>Video Game Companies</h2>
+<h1>Video Game Companies</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add New Game Company</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CeoName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
@@ -54,66 +57,64 @@
             <th>
                 @Html.DisplayNameFor(model => model.UpdatedUserid)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ceo)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Province)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficePhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficePhone1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficePhone2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ceo.FirstName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Companyid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Companyid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Companyid">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CeoName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Province)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficePhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficePhone1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficePhone2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUserid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedUserid)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Companyid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Companyid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Companyid">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,99 +1,177 @@
 ﻿@model VirtualGameStore.Models.User
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete User";
 }
 
-<h2>Delete</h2>
+<h1>Delete User</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>User</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
+    <dl class="row">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DisplayName)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DisplayName)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EndDate)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TryCount)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TryCount)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LockDatetime)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LockDatetime)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Password)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Password)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Usertype)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Usertype)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReceiveEmail)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReceiveEmail)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PostCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PostCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Province)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Province)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CellPhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CellPhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HomePhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HomePhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OfficePhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OfficePhone)
+        </dd>
+        @*<dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedDatetime)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedDatetime)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedUserid)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CreatedUserid)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UpdatedDatetime)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UpdatedDatetime)
         </dd>
-        <dt>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UpdatedUserid)
         </dt>
-        <dd>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UpdatedUserid)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Person)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Person.FirstName)
-        </dd>
+        </dd>*@
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Userid" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

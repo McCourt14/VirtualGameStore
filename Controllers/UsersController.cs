@@ -21,8 +21,7 @@ namespace VirtualGameStore.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.User.Include(u => u.Person);
-            return View(await pROG3050Context.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -34,7 +33,6 @@ namespace VirtualGameStore.Controllers
             }
 
             var user = await _context.User
-                .Include(u => u.Person)
                 .FirstOrDefaultAsync(m => m.Userid == id);
             if (user == null)
             {
@@ -47,7 +45,6 @@ namespace VirtualGameStore.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName");
             return View();
         }
 
@@ -56,7 +53,7 @@ namespace VirtualGameStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Userid,DisplayName,StartDate,Personid,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
+        public async Task<IActionResult> Create([Bind("Userid,DisplayName,StartDate,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,Email,FirstName,LastName,Gender,BirthDate,PostCode,Country,Province,City,Address,Address2,CellPhone,HomePhone,OfficePhone,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +61,6 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
             return View(user);
         }
 
@@ -81,7 +77,6 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
             return View(user);
         }
 
@@ -90,7 +85,7 @@ namespace VirtualGameStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(decimal id, [Bind("Userid,DisplayName,StartDate,Personid,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
+        public async Task<IActionResult> Edit(decimal id, [Bind("Userid,DisplayName,StartDate,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,Email,FirstName,LastName,Gender,BirthDate,PostCode,Country,Province,City,Address,Address2,CellPhone,HomePhone,OfficePhone,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
         {
             if (id != user.Userid)
             {
@@ -117,7 +112,6 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Personid"] = new SelectList(_context.Person, "Psersonid", "FirstName", user.Personid);
             return View(user);
         }
 
@@ -130,7 +124,6 @@ namespace VirtualGameStore.Controllers
             }
 
             var user = await _context.User
-                .Include(u => u.Person)
                 .FirstOrDefaultAsync(m => m.Userid == id);
             if (user == null)
             {

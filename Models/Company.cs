@@ -11,7 +11,7 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Companyid { get; set; }
-        public decimal Ceoid { get; set; }
+        public string CeoName { get; set; }
         public string CompanyName { get; set; }
         public string PostCode { get; set; }
         public string Country { get; set; }
@@ -27,7 +27,6 @@ namespace VirtualGameStore.Models
         public DateTime? UpdatedDatetime { get; set; }
         public decimal? UpdatedUserid { get; set; }
 
-        public Person Ceo { get; set; }
         public ICollection<Game> Game { get; set; }
     }
 }

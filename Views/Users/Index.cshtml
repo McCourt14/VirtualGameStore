@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.User>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List Of Users";
 }
 
-<h2>List of Users</h2>
+<h1>List Of Users</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Register New User</a>
 </p>
 <table class="table">
     <thead>
@@ -37,6 +37,48 @@
                 @Html.DisplayNameFor(model => model.ReceiveEmail)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Province)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomePhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficePhone)
+            </th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CreatedDatetime)
             </th>
             <th>
@@ -47,61 +89,98 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Person)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TryCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LockDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usertype)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReceiveEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Person.FirstName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Userid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Userid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Userid">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TryCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usertype)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Province)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CellPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomePhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficePhone)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.CreatedDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedUserid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedUserid)
+                </td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Userid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Userid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Userid">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
