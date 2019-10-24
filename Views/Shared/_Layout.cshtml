@@ -35,17 +35,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Game" asp-action="Index">Games List</a></li>
+                    <li><a asp-area="" asp-controller="Game" asp-action="Index">Games</a></li>
                     <li><a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a></li>
-                    <li><a asp-area="" asp-controller="Events" asp-action="Index">Event List</a></li>
+                    <li><a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a></li>
                     <li><a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a></li>
                     <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
                     <li><a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a></li>
+                    <li><a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a></li>
+                    <li><a asp-area="" asp-controller="Gamerates" asp-action="Index">Game Rates</a></li>
+                    <li><a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a></li>
+                    <li><a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a></li>
                     @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
                     {
-                        <li><a asp-area="" asp-controller="Platforms" asp-action="Index">Platform List</a></li>
-                        <li><a asp-area="" asp-controller="Categories" asp-action="Index">Game Categories</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Index">User List</a></li>
+                        <li><a asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
                         <li class="dropdown">
 
                             <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

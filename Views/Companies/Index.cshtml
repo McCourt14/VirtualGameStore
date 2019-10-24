@@ -45,7 +45,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.OfficePhone2)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CreatedDatetime)
             </th>
             <th>
@@ -56,7 +56,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -97,7 +97,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.OfficePhone2)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.CreatedDatetime)
                 </td>
                 <td>
@@ -108,7 +108,7 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.UpdatedUserid)
-                </td>
+                </td>*@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Companyid">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Companyid">Details</a> |

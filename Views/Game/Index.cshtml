@@ -12,9 +12,13 @@
 @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Add New Game</a>
     </p>
 }
+
+<p>
+    <a asp-action="Create">Add New Game</a>
+</p>
 
 <table class="table">
     <thead>
@@ -68,15 +72,21 @@
             <td\>
                 @Html.DisplayFor(modelItem => item.Platform.Platformid)
             </td\>
-                @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
-                    </td>
-                }
-            </tr>
+            @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
+                </td>
+            }
+        </tr>
         }
     </tbody>
 </table>

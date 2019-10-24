@@ -1,41 +1,41 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Gamerates>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Game Rates";
 }
 
 <h2>Gamerates</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add New Game Rates</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Game)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.DisplayName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Rates)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Game)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.CreatedDatetime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUserid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedDatetime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedUserid)
+        </th>*@
             <th></th>
         </tr>
     </thead>

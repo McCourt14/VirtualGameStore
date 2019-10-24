@@ -70,9 +70,9 @@ namespace VirtualGameStore.Controllers
                 ViewBag.isAdmin = "true";
             }
 
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid");
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname");
             ViewData["Companyid"] = new SelectList(_context.Company, "Companyid", "CompanyName");
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid");
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname");
             return View();
         }
 

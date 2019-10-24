@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
 {
@@ -11,7 +12,9 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Companyid { get; set; }
+        [Required(ErrorMessage = "Please enter Ceo Name")]
         public string CeoName { get; set; }
+        [Required(ErrorMessage = "Please enter Company Name")]
         public string CompanyName { get; set; }
         public string PostCode { get; set; }
         public string Country { get; set; }
@@ -19,6 +22,7 @@ namespace VirtualGameStore.Models
         public string City { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
+        [Required(ErrorMessage = "Please enter Offic Phone")]
         public string OfficePhone { get; set; }
         public string OfficePhone1 { get; set; }
         public string OfficePhone2 { get; set; }

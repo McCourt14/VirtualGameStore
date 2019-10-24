@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Add New Friends</h2>
 
 <h4>Friends</h4>
 <hr />
@@ -20,7 +20,7 @@
                 <label asp-for="FriendUserid" class="control-label"></label>
                 <select asp-for="FriendUserid" class ="form-control" asp-items="ViewBag.FriendUserid"></select>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="UpdatedUserid" class="control-label"></label>
                 <input asp-for="UpdatedUserid" class="form-control" />
                 <span asp-validation-for="UpdatedUserid" class="text-danger"></span>
@@ -39,7 +39,7 @@
                 <label asp-for="UpdatedDatetime" class="control-label"></label>
                 <input asp-for="UpdatedDatetime" class="form-control" />
                 <span asp-validation-for="UpdatedDatetime" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

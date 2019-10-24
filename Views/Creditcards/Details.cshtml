@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Details Card Info.</h2>
 
 <div>
     <h4>Creditcard</h4>
@@ -22,7 +22,7 @@
         <dd>
             @Html.DisplayFor(model => model.Cardholder)
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.CreatedDatetime)
         </dt>
         <dd>
@@ -45,12 +45,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UpdatedUserid)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Usertype)
+            @Html.DisplayFor(model => model.User.DisplayName)
         </dd>
     </dl>
 </div>

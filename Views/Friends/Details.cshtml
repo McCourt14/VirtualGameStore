@@ -10,7 +10,7 @@
     <h4>Friends</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.UpdatedUserid)
         </dt>
         <dd>
@@ -33,18 +33,18 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UpdatedDatetime)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.FriendUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FriendUser.Usertype)
+            @Html.DisplayFor(model => model.FriendUser.DisplayName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Usertype)
+            @Html.DisplayFor(model => model.User.DisplayName)
         </dd>
     </dl>
 </div>
