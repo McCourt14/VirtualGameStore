@@ -47,7 +47,7 @@ namespace VirtualGameStore.Controllers
         // GET: Creditcards/Create
         public IActionResult Create()
         {
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype");
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", creditcard.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", creditcard.Userid);
             return View(creditcard);
         }
 
@@ -83,7 +83,7 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", creditcard.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", creditcard.Userid);
             return View(creditcard);
         }
 
@@ -120,7 +120,7 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", creditcard.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", creditcard.Userid);
             return View(creditcard);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
 {
@@ -12,6 +13,7 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Platformid { get; set; }
+        [MaxLength(50)]
         public string Platformname { get; set; }
         public DateTime? CreatedDatetime { get; set; }
         public decimal? CreatedUserid { get; set; }

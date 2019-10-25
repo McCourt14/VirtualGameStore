@@ -91,9 +91,9 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", game.Categoryid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", game.Categoryid);
             ViewData["Companyid"] = new SelectList(_context.Company, "Companyid", "CompanyName", game.Companyid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", game.Platformid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", game.Platformid);
             return View(game);
         }
 
@@ -110,9 +110,9 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", game.Categoryid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", game.Categoryid);
             ViewData["Companyid"] = new SelectList(_context.Company, "Companyid", "CompanyName", game.Companyid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", game.Platformid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", game.Platformid);
             return View(game);
         }
 
@@ -149,9 +149,9 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", game.Categoryid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", game.Categoryid);
             ViewData["Companyid"] = new SelectList(_context.Company, "Companyid", "CompanyName", game.Companyid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", game.Platformid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", game.Platformid);
             return View(game);
         }
 

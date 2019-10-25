@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace VirtualGameStore.Models
@@ -18,31 +20,58 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Userid { get; set; }
+        [MaxLength(50)]
+        [DisplayName("Display Name")]
         public string DisplayName { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
+        [Range(typeof(Int32), "0", "5", ErrorMessage = "{0} must be a number between {1} and {2}.")]
         public decimal? TryCount { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime? LockDatetime { get; set; }
+        [MaxLength(50)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [StringLength(2)]
+        [DisplayName("User Type")]
+        [StringRange(AllowableValues = new[] { "00", "99" }, ErrorMessage = "'00':(User) or '99':(Admin)")]
         public string Usertype { get; set; }
+        [DisplayName("Receive Email")]
+        [Range(typeof(Int32), "0", "1", ErrorMessage = "{0} must be a number between {1}(No) and {2}(Yes).")]
+        [MaxLength(1)]
         public decimal? ReceiveEmail { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [MaxLength(100)]
         public string Email { get; set; }
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [MaxLength(50)]
         public string LastName { get; set; }
+        [DisplayName("Gender")]
+        [StringRange(AllowableValues = new[] { "M", "F", "U" }, ErrorMessage = "Gender:'M'|'F'|'U'")]
+        [MaxLength(1, ErrorMessage ="Please enter Genter(M:Male, F:Female, U:Unknown)")]
         public string Gender { get; set; }
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
+        [MaxLength(10)]
         public string PostCode { get; set; }
+        [MaxLength(50)]
         public string Country { get; set; }
+        [MaxLength(50)]
         public string Province { get; set; }
+        [MaxLength(50)]
         public string City { get; set; }
+        [MaxLength(150)]
         public string Address { get; set; }
+        [MaxLength(150)]
         public string Address2 { get; set; }
+        [MaxLength(50)]
         public string CellPhone { get; set; }
+        [MaxLength(50)]
         public string HomePhone { get; set; }
+        [MaxLength(50)]
         public string OfficePhone { get; set; }
         public DateTime? CreatedDatetime { get; set; }
         public decimal? CreatedUserid { get; set; }
@@ -60,6 +89,23 @@ namespace VirtualGameStore.Models
         public static implicit operator User(Task<User> v)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class StringRangeAttribute : ValidationAttribute
+    {
+        public string[] AllowableValues { get; set; }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (AllowableValues?.Contains(value?.ToString()) == true)
+            {
+                return ValidationResult.Success;
+            }
+
+            var msg = $"Please enter one of the allowable values: {string.Join(", ", (AllowableValues ?? new string[] { "No allowable values found" }))}.";
+            msg += " ("+ErrorMessage+")";
+            return new ValidationResult(msg);
         }
     }
 }

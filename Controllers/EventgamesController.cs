@@ -48,7 +48,7 @@ namespace VirtualGameStore.Controllers
         // GET: Eventgames/Create
         public IActionResult Create()
         {
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventid");
+            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname");
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title");
             return View();
         }
@@ -68,7 +68,7 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventid", eventgame.Eventid);
+            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
             return View(eventgame);
         }
@@ -86,7 +86,7 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventid", eventgame.Eventid);
+            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
             return View(eventgame);
         }
@@ -124,7 +124,7 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventid", eventgame.Eventid);
+            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
             return View(eventgame);
         }

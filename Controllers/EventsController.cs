@@ -47,7 +47,7 @@ namespace VirtualGameStore.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "Usertype");
+            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "Usertype", @event.RegisterUserid);
+            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName", @event.RegisterUserid);
             return View(@event);
         }
 
@@ -83,7 +83,7 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "Usertype", @event.RegisterUserid);
+            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName", @event.RegisterUserid);
             return View(@event);
         }
 
@@ -120,7 +120,7 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "Usertype", @event.RegisterUserid);
+            ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName", @event.RegisterUserid);
             return View(@event);
         }
 

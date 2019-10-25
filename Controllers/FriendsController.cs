@@ -48,8 +48,8 @@ namespace VirtualGameStore.Controllers
         // GET: Friends/Create
         public IActionResult Create()
         {
-            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "Usertype");
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype");
+            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "DisplayName");
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "Usertype", friends.FriendUserid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", friends.Userid);
+            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.FriendUserid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.Userid);
             return View(friends);
         }
 
@@ -86,8 +86,8 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "Usertype", friends.FriendUserid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", friends.Userid);
+            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.FriendUserid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.Userid);
             return View(friends);
         }
 
@@ -124,8 +124,8 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "Usertype", friends.FriendUserid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", friends.Userid);
+            ViewData["FriendUserid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.FriendUserid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", friends.Userid);
             return View(friends);
         }
 

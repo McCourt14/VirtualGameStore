@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
 {
@@ -12,6 +14,9 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Categoryid { get; set; }
+        [Required(ErrorMessage = "Please enter Category Name")]
+        [MaxLength(50)]
+        [DisplayName("CategoryName")]
         public string Categoriname { get; set; }
         public DateTime? CreatedDatetime { get; set; }
         public decimal? CreatedUserid { get; set; }

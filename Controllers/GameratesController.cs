@@ -49,7 +49,7 @@ namespace VirtualGameStore.Controllers
         public IActionResult Create()
         {
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title");
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype");
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace VirtualGameStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", gamerates.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", gamerates.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", gamerates.Userid);
             return View(gamerates);
         }
 
@@ -87,7 +87,7 @@ namespace VirtualGameStore.Controllers
                 return NotFound();
             }
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", gamerates.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", gamerates.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", gamerates.Userid);
             return View(gamerates);
         }
 
@@ -125,7 +125,7 @@ namespace VirtualGameStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", gamerates.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Usertype", gamerates.Userid);
+            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", gamerates.Userid);
             return View(gamerates);
         }
 

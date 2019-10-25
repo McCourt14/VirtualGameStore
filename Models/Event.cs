@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
 {
@@ -11,6 +12,7 @@ namespace VirtualGameStore.Models
         }
 
         public decimal Eventid { get; set; }
+        [MaxLength(100)]
         public string Eventname { get; set; }
         public DateTime? Startdate { get; set; }
         public DateTime? Enddate { get; set; }

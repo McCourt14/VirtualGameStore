@@ -49,9 +49,9 @@ namespace VirtualGameStore.Controllers
         // GET: Favorites/Create
         public IActionResult Create()
         {
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid");
-            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "Usertype");
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid");
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname");
+            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "DisplayName");
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname");
             return View();
         }
 
@@ -70,9 +70,9 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", favorite.Categoryid);
-            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "Usertype", favorite.Favoritid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", favorite.Platformid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", favorite.Categoryid);
+            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "DisplayName", favorite.Favoritid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", favorite.Platformid);
             return View(favorite);
         }
 
@@ -89,9 +89,9 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", favorite.Categoryid);
-            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "Usertype", favorite.Favoritid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", favorite.Platformid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", favorite.Categoryid);
+            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "DisplayName", favorite.Favoritid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", favorite.Platformid);
             return View(favorite);
         }
 
@@ -128,9 +128,9 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoryid", favorite.Categoryid);
-            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "Usertype", favorite.Favoritid);
-            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformid", favorite.Platformid);
+            ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname", favorite.Categoryid);
+            ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "DisplayName", favorite.Favoritid);
+            ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname", favorite.Platformid);
             return View(favorite);
         }
 
