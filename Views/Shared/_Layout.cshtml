@@ -19,6 +19,73 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .mynav_navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .mynav_navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+        .mynav_dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+            .mynav_dropdown .mynav_dropbtn {
+                font-size: 16px;
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+            }
+
+            .mynav_navbar a:hover, .mynav_dropdown:hover .mynav_dropbtn {
+                background-color: red;
+            }
+
+        .mynav_dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .mynav_dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                .mynav_dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .mynav_dropdown:hover .mynav_dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,22 +99,46 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">VirtualGameStore</a>
             </div>
-            <div class="navbar-collapse collapse">
+            @*<div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Game" asp-action="Index">Games</a></li>
-                    <li><a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a></li>
-                    <li><a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a></li>
-                    <li><a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a></li>
-                    <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
-                    <li><a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a></li>
-                    <li><a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a></li>
-                    <li><a asp-area="" asp-controller="Gamerates" asp-action="Index">Game Rates</a></li>
-                    <li><a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a></li>
-                    <li><a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                    <li><a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a></li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Game...
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Game" asp-action="Index">Games</a><br />
+                            <a class="dropdown-item" asp-controller="Gamerates" asp-action="Index">Game Rates</a><br />
+                            <a class="dropdown-item" asp-controller="Platforms" asp-action="Index">Platforms</a><br />
+                            <a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Event...
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Events" asp-action="Index">Events</a><br />
+                            <a class="dropdown-item" asp-controller="Eventgames" asp-action="Index">Event Games</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My Pages...
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Favorites" asp-action="Index">Favorites</a><br />
+                            <a class="dropdown-item" asp-controller="Wishlists" asp-action="Index">Wish List</a><br />
+                            <a class="dropdown-item" asp-controller="Friends" asp-action="Index">Friends</a><br />
+                            <a class="dropdown-item" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
+                        </div>
+                    </li>
+
                     @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
                     {
-                        <li><a asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
+                        <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
                         <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
                         <li class="dropdown">
 
@@ -62,6 +153,70 @@
                     }
                 </ul>
                 <partial name="_LoginPartial" />
+            </div>*@
+
+            <div class="mynav_navbar">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                <div class="mynav_dropdown">
+                    <button class="mynav_dropbtn">
+                        Game..
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="mynav_dropdown-content">
+                        <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
+                        <a asp-area="" asp-controller="Gamerates" asp-action="Index">Game Rates</a>
+                        <a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a>
+                        <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                    </div>
+                </div>
+                <div class="mynav_dropdown">
+                    <button class="mynav_dropbtn">
+                        Event..
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="mynav_dropdown-content">
+                        <a asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                        <a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a>
+                    </div>
+                </div>
+                <div class="mynav_dropdown">
+                    <button class="mynav_dropbtn">
+                        My Pages
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="mynav_dropdown-content">
+                        <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
+                        <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
+                        <a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
+                        <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
+                    </div>
+                </div>
+
+                @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
+                {
+                    <div class="mynav_dropdown">
+                        <button class="mynav_dropbtn">
+                            Admin..
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="mynav_dropdown-content">
+                            <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
+                            <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                        </div>
+                    </div>
+                    <div class="mynav_dropdown">
+                        <button class="mynav_dropbtn">
+                            Security..
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="mynav_dropdown-content">
+                            <a asp-area="" asp-controller="Account" asp-action="Index">User Management</a>
+                            <a asp-area="" asp-controller="Roles" asp-action="Index">Role Management</a>
+                        </div>
+                    </div>
+                }
+                <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
@@ -70,6 +225,7 @@
 
     <div class="container body-content">
         @RenderBody()
+
         <hr />
         <footer>
             <p>&copy; 2019 - VirtualGameStore</p>

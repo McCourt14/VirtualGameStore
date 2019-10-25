@@ -1,7 +1,7 @@
-﻿@model IEnumerable<VirtualGameStore.Models.Game>
-@{
-    Layout = null;
+﻿@model IEnumerable<VirtualGameStore.Models.Cart>
 
+@{
+    ViewData["Title"] = "Shopping Cart";
 }
 
 @using System;
@@ -15,7 +15,13 @@
 @{
     List<Item> carts = new List<Item>();
     String cart = HttpContextAccessor.HttpContext.Session.GetString("cart");
-    String[] rows = cart.Split(",");
+    String[] rows = null;
+
+    if (cart != null)
+    {
+        rows = cart.Split(",");
+    }
+
     Decimal total = 0;
     if (rows != null && rows.Length > 0)
     {
@@ -34,16 +40,11 @@
         }
     }
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cart</title>
-</head>
-<body>
 
-    <h3>Cart Page</h3>
-    <table cellpadding="2" cellspacing="2" border="1">
+<h2>Cart Page</h2>
+
+<table class="table">
+    <thead>
         <tr>
             <th>Option</th>
             <th>Id</th>
@@ -53,6 +54,8 @@
             <th>Quantity</th>
             <th>Sub Total</th>
         </tr>
+    </thead>
+    <tbody>
         @if (carts.Count > 0)
         {
             foreach (Item item in carts)
@@ -76,9 +79,9 @@
                 @total
             </td>
         </tr>
-    </table>
-    <br>
-    <a href="@Url.Action("Index", "Game")">Continue Shopping</a>
-
-</body>
-</html>
+    </tbody>
+</table>
+<br>
+<div>
+    <a asp-controller="Game" asp-action="Index">Continue Shopping</a> |
+</div>
