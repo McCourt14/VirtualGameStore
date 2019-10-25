@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace VirtualGameStore.Models
 {
@@ -50,5 +51,10 @@ namespace VirtualGameStore.Models
         public virtual ICollection<Friends> FriendsUser { get; set; }
         public virtual ICollection<Gamerates> Gamerates { get; set; }
         public virtual ICollection<Wishlist> Wishlist { get; set; }
+
+        public static implicit operator User(Task<User> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
