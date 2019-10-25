@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using VirtualGameStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace VirtualGameStore.Controllers
 {
@@ -20,44 +21,115 @@ namespace VirtualGameStore.Controllers
             _userManager = userManager;
         }
 
-        public async Task<ActionResult> Login(decimal id, string passwd)
+        public ActionResult Login()
         {
-            if (UserExists(id))
+            return View(nameof(Login));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {
+            if (UserExists(model.Email))
             {
-                var user = await _context.User.FindAsync(id);
+                var users = _context.User.Where(c => c.Email == model.Email);
 
-                User u = (User)user;
-
-                if (u.Password.Equals(passwd))
+                if (users.Any())
                 {
-                    if (u.Usertype.Equals("99")) {
-                        HttpContext.Session.SetString("isAdmin", "true");
-                    }
-                    else
+                    foreach (var u in users as IEnumerable<User>)
                     {
-                        HttpContext.Session.SetString("isAdmin", "false");
+                        if (u.Password.Equals(model.Password))
+                        {
+                            if (u.Usertype.Equals("99"))
+                            {
+                                HttpContext.Session.SetString("DisplayName", u.DisplayName);
+                                HttpContext.Session.SetString("isAdmin", "true");
+                                HttpContext.Session.SetString("Userid", Convert.ToString(u.Userid));
+                                ViewBag.isAdmin = "true";
+                            }
+                            else
+                            {
+                                HttpContext.Session.SetString("isAdmin", "false");
+                            }
+                            HttpContext.Session.SetString("userId", Convert.ToString(u.Userid));
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Please check password!";
+                            HttpContext.Session.Clear();
+                        }
                     }
-                    HttpContext.Session.SetString("userId", Convert.ToString(u.Userid));
-                }
-                else
-                {
-                    ViewBag.Message = "Please check password!";
-                    HttpContext.Session.Clear();
-                }
+                }                
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Logout(decimal id)
+        [HttpPost]
+        public ActionResult Logout(LoginViewModel model)
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
                 
-        private bool UserExists(decimal id)
+        private bool UserExists(String email)
         {
-            return _context.User.Any(e => e.Userid == id);
+            return _context.User.Any(e => e.Email == email);
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View(nameof(ResetPassword));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var users = _context.User.Where(c => c.Email == model.Email);
+            if (users.Any())
+            {
+                try
+                {
+                    User editUser = null;
+                    foreach (var u in users as IEnumerable<User>)
+                    {
+                        if (u.Password.Equals(model.Password))
+                        {
+                            editUser = u;
+                        }
+                    }
+
+                    if (editUser != null)
+                    {
+                        editUser.UpdatedDatetime = DateTime.Now;
+                        editUser.Password = model.Password;
+                        _context.Update(editUser);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction("ResetPasswordConfirmation", "Access");
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(model.Email))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            // Don't reveal that the user does not exist
+            return RedirectToAction("ResetPassword", "Access");
+
         }
     }
 }

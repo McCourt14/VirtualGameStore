@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace VirtualGameStore.Models
@@ -18,10 +19,13 @@ namespace VirtualGameStore.Models
 
         public decimal Userid { get; set; }
         public string DisplayName { get; set; }
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
         public decimal? TryCount { get; set; }
         public DateTime? LockDatetime { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         public string Usertype { get; set; }
         public decimal? ReceiveEmail { get; set; }
@@ -29,6 +33,7 @@ namespace VirtualGameStore.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
         public string PostCode { get; set; }
         public string Country { get; set; }

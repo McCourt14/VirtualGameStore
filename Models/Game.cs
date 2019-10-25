@@ -24,6 +24,7 @@ namespace VirtualGameStore.Models
         [DisplayName("Price")]
         [RegularExpression(@"^\$?\d+(\.(\d{2}))?$")]
         public decimal Price { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? LaunchDate { get; set; }
         public decimal? Platformid { get; set; }
         public decimal? Categoryid { get; set; }

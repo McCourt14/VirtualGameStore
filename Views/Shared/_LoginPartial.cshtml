@@ -1,25 +1,46 @@
 @using Microsoft.AspNetCore.Identity
 
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
-            </li>
+
+@{
+    String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
+    String userid = HttpContextAccessor.HttpContext.Session.GetString("Userid");
+
+    if (isAdmin == null) {
+        isAdmin = "";
+    }
+    if (displayName == null) {
+        displayName = "";
+    }
+    if (userid == null)
+    {
+        userid = "";
+    }
+
+    if (isAdmin != null && isAdmin.Equals("true"))
+    {
+        <form asp-controller="Access" asp-action="Logout" method="post" id="logoutForm" style="float: right !important; margin-right: 1px !important;">
+            <ul class="nav navbar-nav navbar-right" style="float: right !important; margin-right: 1px !important;">
+                <li>
+                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@userid" title="Manage">Hello @displayName!</a>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+                </li>
+            </ul>
+        </form>
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right" style="float: right !important; margin-right: 1px !important;">
+            <li><a asp-controller="Users" asp-action="Create">Register</a></li>
+            <li><a asp-controller="Access" asp-action="Login">Login</a></li>
         </ul>
-    </form>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-    </ul>
+    }
 }
