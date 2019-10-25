@@ -57,6 +57,8 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                company.CreatedDatetime = DateTime.Now;
+                company.UpdatedDatetime = DateTime.Now;
                 _context.Add(company);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +98,7 @@ namespace VirtualGameStore.Controllers
             {
                 try
                 {
+                    company.UpdatedDatetime = DateTime.Now;
                     _context.Update(company);
                     await _context.SaveChangesAsync();
                 }

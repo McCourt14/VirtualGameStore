@@ -62,6 +62,8 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                wishlist.CreatedDatetime = DateTime.Now;
+                wishlist.UpdatedDatetime = DateTime.Now;
                 _context.Add(wishlist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -105,6 +107,7 @@ namespace VirtualGameStore.Controllers
             {
                 try
                 {
+                    wishlist.UpdatedDatetime = DateTime.Now;
                     _context.Update(wishlist);
                     await _context.SaveChangesAsync();
                 }

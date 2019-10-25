@@ -60,6 +60,8 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                creditcard.CreatedDatetime = DateTime.Now;
+                creditcard.UpdatedDatetime = DateTime.Now;
                 _context.Add(creditcard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -101,6 +103,7 @@ namespace VirtualGameStore.Controllers
             {
                 try
                 {
+                    creditcard.UpdatedDatetime = DateTime.Now;
                     _context.Update(creditcard);
                     await _context.SaveChangesAsync();
                 }

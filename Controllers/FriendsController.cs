@@ -62,6 +62,8 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                friends.CreatedDatetime = DateTime.Now;
+                friends.UpdatedDatetime = DateTime.Now;
                 _context.Add(friends);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -105,6 +107,7 @@ namespace VirtualGameStore.Controllers
             {
                 try
                 {
+                    friends.UpdatedDatetime = DateTime.Now;
                     _context.Update(friends);
                     await _context.SaveChangesAsync();
                 }

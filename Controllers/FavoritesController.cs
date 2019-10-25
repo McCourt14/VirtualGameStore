@@ -64,6 +64,8 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                favorite.CreatedDatetime = DateTime.Now;
+                favorite.UpdatedDatetime = DateTime.Now;
                 _context.Add(favorite);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -109,6 +111,7 @@ namespace VirtualGameStore.Controllers
             {
                 try
                 {
+                    favorite.UpdatedDatetime = DateTime.Now;
                     _context.Update(favorite);
                     await _context.SaveChangesAsync();
                 }
