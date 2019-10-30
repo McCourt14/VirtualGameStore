@@ -222,7 +222,7 @@ namespace VirtualGameStore.Controllers
         }
 
         [HttpGet, ActionName("Print")]
-        public void PrintExcel()
+        public ActionResult PrintExcel()
         {
             //Create an instance of ExcelEngine
             using (ExcelEngine excelEngine = new ExcelEngine())
@@ -267,12 +267,17 @@ namespace VirtualGameStore.Controllers
 
                 //Save the workbook to disk in xlsx format
                 workbook.SaveAs(fileStream, ExcelSaveType.SaveAsXLS);
-
+                String name = fileStream.Name;
                 workbook.Close();
                 excelEngine.Dispose();
+                fileStream.Close();
+
+                ViewBag.PrintMessage = "Game List Excel file is created: "+name;
             }
+
+            return RedirectToAction("Index");
         }
-        
+     
     }
 
 }
