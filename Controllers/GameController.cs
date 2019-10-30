@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VirtualGameStore.Models;
+using Syncfusion.XlsIO;
+using System.IO;
 
 namespace VirtualGameStore.Controllers
 {
@@ -218,5 +220,59 @@ namespace VirtualGameStore.Controllers
         {
             return _context.Game.Any(e => e.Gameid == id);
         }
+
+        [HttpGet, ActionName("Print")]
+        public void PrintExcel()
+        {
+            //Create an instance of ExcelEngine
+            using (ExcelEngine excelEngine = new ExcelEngine())
+            {
+                //Set the default application version as Excel 2016
+                excelEngine.Excel.DefaultVersion = ExcelVersion.Excel2016;
+
+                //DateTime 
+                String dt = DateTime.Now.ToString("yyy-MM-dd_HHmmss");
+                //Opening a file from a stream
+                FileStream fileStream = new FileStream("GameList_"+ dt + ".xlsx", FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+
+                //Create a workbook with a worksheet
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+
+                //Access first worksheet from the workbook instance
+                IWorksheet worksheet = workbook.Worksheets[0];
+
+                //Insert sample text into cell “A1”
+                worksheet.Range["A1"].Text = "Game List";
+                worksheet.Range["A2"].Text = "Game Title";
+                worksheet.Range["B2"].Text = "Price";
+                worksheet.Range["C2"].Text = "Launch Date";
+                worksheet.Range["D2"].Text = "Description";
+                worksheet.Range["E2"].Text = "Category";
+                worksheet.Range["F2"].Text = "Company";
+                worksheet.Range["G2"].Text = "Platform";
+
+                var gamelist = _context.Game.Include(g => g.Category).Include(g => g.Company).Include(g => g.Platform);
+                int i = 3;
+                foreach(Game g in gamelist.ToList())
+                {
+                    worksheet.Range["A" + i].Text = g.Title;
+                    worksheet.Range["B" + i].Text = Convert.ToString(g.Price);
+                    worksheet.Range["C" + i].Text = ((DateTime)g.LaunchDate).ToString("yyyy/MM/dd");
+                    worksheet.Range["D" + i].Text = g.Description;
+                    worksheet.Range["E" + i].Text = g.Category.Categoriname;
+                    worksheet.Range["F" + i].Text = g.Company.CompanyName;
+                    worksheet.Range["G" + i].Text = g.Platform.Platformname;
+                    i++;
+                }
+
+                //Save the workbook to disk in xlsx format
+                workbook.SaveAs(fileStream, ExcelSaveType.SaveAsXLS);
+
+                workbook.Close();
+                excelEngine.Dispose();
+            }
+        }
+        
     }
+
 }
