@@ -58,6 +58,33 @@ namespace VirtualGameStore.Controllers
                 return NotFound();
             }
 
+            var gamerates = _context.Gamerates.Where(c => c.Gameid == id).Include(c=>c.User);
+            if (gamerates != null)
+            {
+                game.Gamerates = gamerates.ToList();
+            }
+
+            double sum = 0;
+            double avgRates = 0;
+            int count = 0;
+            foreach(Gamerates gr in gamerates.ToList())
+            {
+                double drates = 0;
+                count++;
+                try {
+                    drates = Convert.ToDouble(gr.Rates);
+                } catch(Exception ex)
+                {}
+                sum += drates;
+            }
+            
+            if (count > 0)
+            {
+                avgRates = Math.Round(sum / count, 2);
+            }
+
+            ViewBag.avgRates = avgRates;
+
             return View(game);
         }
 

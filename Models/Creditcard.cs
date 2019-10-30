@@ -13,6 +13,8 @@ namespace VirtualGameStore.Models
         public decimal? Userid { get; set; }
         [Required(ErrorMessage = "Please enter Card Number")]
         [DisplayName("Card Number")]
+        [Display(Name = "Credit Card Number")]
+        [Range(100000000000, 9999999999999999999, ErrorMessage = "must be between 12 and 19 digits")]
         [MaxLength(50)]
         public string Cardnumber { get; set; }
         [Required(ErrorMessage = "Please enter Card Holder Name")]

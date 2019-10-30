@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details @Html.DisplayNameFor(model => model.Title)</h2>
+<h2>Details of @Html.DisplayFor(model => model.Title)</h2>
 
 <div>
-    <h4>Game </h4>
+    @*<h4>Game </h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -42,3 +42,45 @@
     <a asp-action="Index">Back to List</a>
 
 </div>
+
+<h2>Game Rates: @ViewBag.avgRates</h2>
+<p>
+    <a asp-controller="Gamerates" asp-action="Create" asp-route-Gameid="@Model.Gameid">Add New Game Rates</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Display Name
+            </th>
+            <th>
+                Game Rates
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Gamerates)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rates)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Rateid">Edit</a> |*@
+                <a asp-controller="Gamerates" asp-action="Details" asp-route-id="@item.Rateid">Details</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.Rateid">Delete</a>*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

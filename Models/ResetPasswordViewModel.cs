@@ -8,7 +8,6 @@ namespace VirtualGameStore.Models
 {
     public class ResetPasswordViewModel
     {
-        [Required]
         public string Userid { get; set; }
 
         [Required]

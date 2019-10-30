@@ -31,7 +31,9 @@ namespace VirtualGameStore.Models
         public decimal? TryCount { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? LockDatetime { get; set; }
-        [MaxLength(50)]
+        [Required]
+        [MaxLength(50, ErrorMessage = "Password is too long(Maximum 50)")]
+        [MinLength(1, ErrorMessage = "Password required at least 1 character")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [StringLength(2)]

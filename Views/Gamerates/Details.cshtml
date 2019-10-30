@@ -61,6 +61,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Rateid">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @*<a asp-action="Edit" asp-route-id="@Model.Rateid">Edit</a> |*@
+    @*<a asp-action="Index">Back to List</a>*@
+    <a asp-controller="Game" asp-action="Details" asp-route-id="@Model.Gameid">Back to List</a>
 </div>

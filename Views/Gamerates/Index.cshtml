@@ -43,29 +43,29 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Game.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.DisplayName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Rates)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Game.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Usertype)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.CreatedDatetime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedUserid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedUserid)
+        </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Rateid">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Rateid">Details</a> |

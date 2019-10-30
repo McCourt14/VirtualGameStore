@@ -64,14 +64,14 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Categoryid)
+                @Html.DisplayFor(modelItem => item.Category.Categoriname)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Company.CompanyName)
             </td>
-            <td\>
-                @Html.DisplayFor(modelItem => item.Platform.Platformid)
-            </td\>
+            <td>
+                @Html.DisplayFor(modelItem => item.Platform.Platformname)
+            </td>
             @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
             {
                 <td>
