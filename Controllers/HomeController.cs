@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * Project: PROG3050 - Virtual Game store Team Project
+ * Purpose: home service
+ * 
+ * Created by Team on 2019.10.31
+ * 
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
