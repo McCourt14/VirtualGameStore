@@ -24,23 +24,22 @@ namespace VirtualGameStore.Models
         public virtual DbSet<Friends> Friends { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<Gamerates> Gamerates { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Platform> Platform { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Wishlist> Wishlist { get; set; }
 
-        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //        {
-        //            if (!optionsBuilder.IsConfigured)
-        //            {
-        //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-        //                optionsBuilder.UseSqlServer("Server=.;User Id=sa;password=Conestoga1;Database=PROG3050;Trusted_Connection=True;");
-        //            }
-        //        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.;Database=PROG3050;Trusted_Connection=True;User ID = sa; Password=Conestoga1;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("category");
@@ -511,6 +510,62 @@ namespace VirtualGameStore.Models
                     .WithMany(p => p.Gamerates)
                     .HasForeignKey(d => d.Userid)
                     .HasConstraintName("FK_gamerates_user");
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.ToTable("order");
+
+                entity.Property(e => e.Orderid)
+                    .HasColumnName("orderid")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.Cardid)
+                    .HasColumnName("cardid")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.DiscountRate)
+                    .HasColumnName("discount_rate")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.Eventgameid)
+                    .HasColumnName("eventgameid")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.Gameid)
+                    .HasColumnName("gameid")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.OrderCount)
+                    .HasColumnName("order_count")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.Property(e => e.OrderDate)
+                    .HasColumnName("order_date")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.OrderPrice)
+                    .HasColumnName("order_price")
+                    .HasColumnType("numeric(18, 2)");
+
+                entity.Property(e => e.Userid)
+                    .HasColumnName("userid")
+                    .HasColumnType("numeric(18, 0)");
+
+                entity.HasOne(d => d.Eventgame)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.Eventgameid)
+                    .HasConstraintName("FK_order_eventgame");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.Gameid)
+                    .HasConstraintName("FK_order_game");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.Userid)
+                    .HasConstraintName("FK_order_user");
             });
 
             modelBuilder.Entity<Platform>(entity =>

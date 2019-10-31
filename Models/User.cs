@@ -16,6 +16,7 @@ namespace VirtualGameStore.Models
             FriendsFriendUser = new HashSet<Friends>();
             FriendsUser = new HashSet<Friends>();
             Gamerates = new HashSet<Gamerates>();
+            Order = new HashSet<Order>();
             Wishlist = new HashSet<Wishlist>();
         }
 
@@ -86,6 +87,7 @@ namespace VirtualGameStore.Models
         public virtual ICollection<Friends> FriendsFriendUser { get; set; }
         public virtual ICollection<Friends> FriendsUser { get; set; }
         public virtual ICollection<Gamerates> Gamerates { get; set; }
+        public ICollection<Order> Order { get; set; }
         public virtual ICollection<Wishlist> Wishlist { get; set; }
 
         public static implicit operator User(Task<User> v)

@@ -7,6 +7,11 @@ namespace VirtualGameStore.Models
 {
     public partial class Eventgame
     {
+        public Eventgame()
+        {
+            Order = new HashSet<Order>();
+        }
+
         public decimal Eventgameid { get; set; }
         [DisplayName("Event")]
         [Required(ErrorMessage = "Please select Event")]
@@ -26,5 +31,6 @@ namespace VirtualGameStore.Models
 
         public Event Event { get; set; }
         public Game Game { get; set; }
+        public ICollection<Order> Order { get; set; }
     }
 }

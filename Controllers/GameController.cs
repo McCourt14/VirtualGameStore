@@ -25,14 +25,15 @@ namespace VirtualGameStore.Controllers
         }
 
         // GET: Game
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searching)
         {
             IdentityUser identityUser = _userManager.GetUserAsync(User).Result;
             if (User.Identity.IsAuthenticated && _userManager.IsInRoleAsync(identityUser, "administrators").Result)
             {
                 ViewBag.isAdmin = "true";
             }
-            var pROG3050Context = _context.Game.Include(g => g.Category).Include(g => g.Company).Include(g => g.Platform);
+            
+            var pROG3050Context = _context.Game.Where(g=>g.Title.Contains(searching) || searching == null).Include(g => g.Category).Include(g => g.Company).Include(g => g.Platform);
             return View(await pROG3050Context.ToListAsync());
         }
 
