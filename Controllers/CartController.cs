@@ -90,16 +90,19 @@ namespace VirtualGameStore.Controllers
             String[] rows = cart.Split(",");
             foreach(String row in rows)
             {
-                String[] items = row.Split(";");
-                Game g = new Game();
-                g.Gameid = Convert.ToDecimal(items[0]);
-                g.Title = items[1];
-                g.Price = Convert.ToDecimal(items[2]);
-                int q = Convert.ToInt32(items[3]);
+                if (!row.Equals(""))
+                {
+                    String[] items = row.Split(";");
+                    Game g = new Game();
+                    g.Gameid = Convert.ToDecimal(items[0]);
+                    g.Title = items[1];
+                    g.Price = Convert.ToDecimal(items[2]);
+                    int q = Convert.ToInt32(items[3]);
 
-                Item item = new Item { Game = g, Quantity = q };
+                    Item item = new Item { Game = g, Quantity = q };
 
-                carts.Add(item);
+                    carts.Add(item);
+                }
             }
             return carts;
         }

@@ -27,16 +27,20 @@
     {
         foreach (String row in rows)
         {
-            String[] items = row.Split(";");
-            Game g = new Game();
-            g.Gameid = Convert.ToDecimal(items[0]);
-            g.Title = items[1];
-            g.Price = Convert.ToDecimal(items[2]);
-            int q = Convert.ToInt32(items[3]);
+            if (!row.Equals(""))
+            {
+                String[] items = row.Split(";");
 
-            Item item = new Item { Game = g, Quantity = q };
+                Game g = new Game();
+                g.Gameid = Convert.ToDecimal(items[0]);
+                g.Title = items[1];
+                g.Price = Convert.ToDecimal(items[2]);
+                int q = Convert.ToInt32(items[3]);
 
-            carts.Add(item);
+                Item item = new Item { Game = g, Quantity = q };
+
+                carts.Add(item);
+            }
         }
     }
 }
