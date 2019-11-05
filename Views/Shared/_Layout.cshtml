@@ -184,19 +184,27 @@
                         <a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a>
                     </div>
                 </div>
-                <div class="mynav_dropdown">
-                    <button class="mynav_dropbtn">
-                        My Pages
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="mynav_dropdown-content">
-                        <a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
-                        <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
-                        <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
-                        <a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
-                        <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
-                    </div>
-                </div>
+                @{
+                    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
+
+                    if (displayName != null && displayName != "")
+                    {
+                        <div class="mynav_dropdown">
+                            <button class="mynav_dropbtn">
+                                My Pages
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                <a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                                <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
+                                <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
+                                <a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
+                                <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
+                                <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>                            
+                            </div>
+                        </div>
+                    }
+                }
 
                 @{
                     String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
@@ -210,17 +218,6 @@
                             <div class="mynav_dropdown-content">
                                 <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
                                 <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                                <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>
-                            </div>
-                        </div>
-                        <div class="mynav_dropdown">
-                            <button class="mynav_dropbtn">
-                                Security..
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <div class="mynav_dropdown-content">
-                                <a asp-area="" asp-controller="Account" asp-action="Index">User Management</a>
-                                <a asp-area="" asp-controller="Roles" asp-action="Index">Role Management</a>
                             </div>
                         </div>
                     }

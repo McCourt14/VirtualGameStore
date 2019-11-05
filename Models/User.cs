@@ -22,6 +22,7 @@ namespace VirtualGameStore.Models
 
         public decimal Userid { get; set; }
         [MaxLength(50)]
+        [Required]
         [DisplayName("Display Name")]
         public string DisplayName { get; set; }
         [DataType(DataType.Date)]
@@ -37,28 +38,28 @@ namespace VirtualGameStore.Models
         [MinLength(1, ErrorMessage = "Password required at least 1 character")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [StringLength(2)]
         [DisplayName("User Type")]
-        [StringRange(AllowableValues = new[] { "00", "99" }, ErrorMessage = "'00':(User) or '99':(Admin)")]
+        [Required]
         public string Usertype { get; set; }
-        [DisplayName("Receive Email")]
-        [Range(typeof(Int32), "0", "1", ErrorMessage = "{0} must be a number between {1}(No) and {2}(Yes).")]
-        [MaxLength(1)]
+        [DisplayName("Receive Emails")]
         public decimal? ReceiveEmail { get; set; }
         [DataType(DataType.EmailAddress)]
         [MaxLength(100)]
+        [Required]
         public string Email { get; set; }
         [MaxLength(50)]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
         [MaxLength(50)]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Gender")]
-        [StringRange(AllowableValues = new[] { "M", "F", "U" }, ErrorMessage = "Gender:'M'|'F'|'U'")]
-        [MaxLength(1, ErrorMessage ="Please enter Genter(M:Male, F:Female, U:Unknown)")]
         public string Gender { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Birth Date")]
         public DateTime? BirthDate { get; set; }
         [MaxLength(10)]
+        [DisplayName("Postal Code")]
         public string PostCode { get; set; }
         [MaxLength(50)]
         public string Country { get; set; }

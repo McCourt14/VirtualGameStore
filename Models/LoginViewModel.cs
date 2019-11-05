@@ -12,7 +12,6 @@ namespace VirtualGameStore.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
         public string Userid { get; set; }
 
         [Required]

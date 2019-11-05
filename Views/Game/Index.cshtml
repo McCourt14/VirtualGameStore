@@ -1,24 +1,23 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Game>
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Game List";
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
 }
 
 <h2>List of Games</h2>
 
-@if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
+@if (displayName != null && displayName != "")
 {
     <p>
         <a asp-action="Create">Add New Game</a>
     </p>
 }
-
-<p>
-    <a asp-action="Create">Add New Game</a>
-</p>
 
 @using (Html.BeginForm("Index", "Game", FormMethod.Get))
 {
@@ -35,16 +34,10 @@
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LaunchDate)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Platform)
@@ -55,51 +48,38 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LaunchDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Categoriname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Platform.Platformname)
-            </td>
-            @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
-            {
+            <tr onclick="location.href = '@(Url.Action("Details", "Game", new { id = item.Gameid }))'">
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
-            }
-            else
-            {
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Gameid">Details</a> |
+                    @Html.DisplayFor(modelItem => item.Price)
                 </td>
-            }
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Categoriname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Platform.Platformname)
+                </td>
+                @if (displayName != null && displayName != "")
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
+                    </td>
+                }
+            </tr>
         }
     </tbody>
 </table>
 
 <p>
     <a asp-action="Print">Game List Reports</a>
-    @if(ViewBag.PrintMessage != null)
+    @if (ViewBag.PrintMessage != null)
     {
-        <p>@ViewBag.PrintMessage</p>
-    }
-</p>
+    <p>@ViewBag.PrintMessage</p>
+}
+    </p>

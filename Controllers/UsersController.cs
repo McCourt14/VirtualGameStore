@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -65,11 +66,15 @@ namespace VirtualGameStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.StartDate = DateTime.Now;
                 user.CreatedDatetime = DateTime.Now;
                 user.UpdatedDatetime = DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                loginUser(user.Email, user.Password);
+
+                return RedirectToAction(nameof(Index), "Home");
             }
             return View(user);
         }
@@ -155,9 +160,49 @@ namespace VirtualGameStore.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private void loginUser(String email, string password)
+        {
+            if (UserExists(email))
+            {
+                var users = _context.User.Where(c => c.Email == email);
+
+                if (users.Any())
+                {
+                    foreach (var u in users as IEnumerable<User>)
+                    {
+                        if (u.Password.Equals(password))
+                        {
+                            if (u.Usertype.Equals("99"))
+                            {
+                                HttpContext.Session.SetString("DisplayName", u.DisplayName);
+                                HttpContext.Session.SetString("isAdmin", "true");
+                                HttpContext.Session.SetString("Userid", Convert.ToString(u.Userid));
+                                ViewBag.isAdmin = "true";
+                            }
+                            else
+                            {
+                                HttpContext.Session.SetString("isAdmin", "false");
+                            }
+                            HttpContext.Session.SetString("userId", Convert.ToString(u.Userid));
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Please check password!";
+                            HttpContext.Session.Clear();
+                        }
+                    }
+                }
+            }
+        }
+
         private bool UserExists(decimal id)
         {
             return _context.User.Any(e => e.Userid == id);
+        }
+
+        private bool UserExists(String email)
+        {
+            return _context.User.Any(e => e.Email == email);
         }
     }
 }

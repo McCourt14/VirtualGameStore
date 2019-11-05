@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.User>
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "List Of Users";
@@ -79,17 +80,17 @@
                 @Html.DisplayNameFor(model => model.OfficePhone)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.CreatedDatetime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedUserid)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedDatetime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedUserid)
+                </th>*@
             <th></th>
         </tr>
     </thead>
@@ -164,17 +165,17 @@
                     @Html.DisplayFor(modelItem => item.OfficePhone)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.CreatedDatetime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedUserid)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UpdatedUserid)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.CreatedDatetime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedUserid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedDatetime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedUserid)
+                    </td>*@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Userid">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Userid">Details</a> |

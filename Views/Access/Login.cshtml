@@ -15,6 +15,9 @@
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" asp-controller="Access" asp-action="Login">
                 <h4>Use a local account to log in.</h4>
                 <hr />
+                <div>
+                    <p style="color:red">@ViewData["Message"]</p>
+                </div>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Email"></label>
@@ -31,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-action="ForgotPassword">Forgot your password?</a>
+                        <a asp-action="ResetPassword">Forgot your password?</a>
                     </p>
                     <p>
                         <a asp-controller="Users" asp-action="Create" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>

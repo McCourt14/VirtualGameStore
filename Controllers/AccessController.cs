@@ -58,6 +58,7 @@ namespace VirtualGameStore.Controllers
                             {
                                 HttpContext.Session.SetString("isAdmin", "false");
                             }
+                            return RedirectToAction("Index", "Home");
                             HttpContext.Session.SetString("userId", Convert.ToString(u.Userid));
                         }
                         else
@@ -69,7 +70,9 @@ namespace VirtualGameStore.Controllers
                 }                
             }
 
-            return RedirectToAction("Index", "Home");
+            ViewData["Message"] = "Incorrect Email or Password";
+
+            return View(model);
         }
 
         [HttpPost]
