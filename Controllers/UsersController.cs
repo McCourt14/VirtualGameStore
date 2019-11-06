@@ -64,8 +64,17 @@ namespace VirtualGameStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Userid,DisplayName,StartDate,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,Email,FirstName,LastName,Gender,BirthDate,PostCode,Country,Province,City,Address,Address2,CellPhone,HomePhone,OfficePhone,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
         {
+            ViewBag.Message = "";
             if (ModelState.IsValid)
             {
+                var ux = await _context.User
+                .FirstOrDefaultAsync(m => m.Email == user.Email);
+                if (ux != null)
+                {
+                    ViewBag.Message = "Email is already exists";
+                    return View(user); ;
+                }
+
                 user.StartDate = DateTime.Now;
                 user.CreatedDatetime = DateTime.Now;
                 user.UpdatedDatetime = DateTime.Now;
