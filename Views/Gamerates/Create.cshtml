@@ -16,16 +16,16 @@
             <input asp-for="Gameid" type="hidden" value="@ViewData["GameId"]" />
             <div class="form-group">
                 <label asp-for="Rates" class="control-label">Rating</label>
-                <input type="number" asp-for="Rates" class="form-control" />
+                <input type="number" id="rate" asp-for="Rates" class="form-control" />
                 <span asp-validation-for="Rates" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" /></textarea>
+                <textarea asp-for="Description" id="desc" class="form-control" /></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" id="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
     </div>

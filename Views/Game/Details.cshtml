@@ -3,7 +3,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Game Details";
     String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
     String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
 }
@@ -53,14 +53,14 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Gameid">Add to Cart</a> |
+    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Gameid" id="addCart">Add to Cart</a> |
     <a asp-action="Index">Back to List</a>
 
 </div>
 
 <h2>Overall Rating: @ViewBag.avgRates</h2>
 <p>
-    <a asp-controller="Gamerates" asp-action="Create" asp-route-Gameid="@Model.Gameid">Rate Game</a>
+    <a asp-controller="Gamerates" id="rateGame" asp-action="Create" asp-route-Gameid="@Model.Gameid">Rate Game</a>
 </p>
 <table class="table">
     <thead>

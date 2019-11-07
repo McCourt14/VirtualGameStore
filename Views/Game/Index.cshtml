@@ -16,13 +16,13 @@
 @if (isAdmin != null && isAdmin.Equals("true"))
 {
     <p>
-        <a asp-action="Create">Add New Game</a>
+        <a asp-action="Create" id="createGame">Add New Game</a>
     </p>
 }
 
 @using (Html.BeginForm("Index", "Game", FormMethod.Get))
 {
-    @Html.TextBox("searching")<input type="submit" value="Search" />
+    @Html.TextBox("searching")<input type="submit" id="search" value="Search" />
 }
 <style>
     .gameRow{
