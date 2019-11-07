@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,12 @@ namespace VirtualGameStore.Controllers
     public class GameratesController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public GameratesController(PROG3050Context context)
+        public GameratesController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Gamerates
@@ -54,10 +57,10 @@ namespace VirtualGameStore.Controllers
         }
 
         // GET: Gamerates/Create
-        public IActionResult Create()
+        public IActionResult Create(decimal? Gameid)
         {
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title");
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            ViewData["GameId"] = Gameid;
             return View();
         }
 
@@ -74,8 +77,9 @@ namespace VirtualGameStore.Controllers
                 gamerates.UpdatedDatetime = DateTime.Now;
                 _context.Add(gamerates);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
             }
+
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", gamerates.Gameid);
             ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", gamerates.Userid);
             return View(gamerates);
@@ -165,7 +169,15 @@ namespace VirtualGameStore.Controllers
             var gamerates = await _context.Gamerates.FindAsync(id);
             _context.Gamerates.Remove(gamerates);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
+        }
+
+        public async Task<IActionResult> Remove(decimal id)
+        {
+            var gamerates = await _context.Gamerates.FindAsync(id);
+            _context.Gamerates.Remove(gamerates);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
         }
 
         private bool GameratesExists(decimal id)

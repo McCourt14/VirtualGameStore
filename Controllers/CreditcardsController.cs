@@ -9,7 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,16 +22,27 @@ namespace VirtualGameStore.Controllers
     public class CreditcardsController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public CreditcardsController(PROG3050Context context)
+        public CreditcardsController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Creditcards
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Creditcard.Include(c => c.User);
+            string userIdString = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            int userId;
+
+            bool parsed = int.TryParse(userIdString, out userId);
+            if (!parsed)
+            {
+                userId = 0;
+            }
+
+            var pROG3050Context = _context.Creditcard.Include(c => c.User).Where(c => c.Userid == userId);
             return View(await pROG3050Context.ToListAsync());
         }
 
@@ -55,7 +68,8 @@ namespace VirtualGameStore.Controllers
         // GET: Creditcards/Create
         public IActionResult Create()
         {
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+
             return View();
         }
 

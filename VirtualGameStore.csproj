@@ -14,4 +14,10 @@
     <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="16.4.0.54" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Users\Update.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>

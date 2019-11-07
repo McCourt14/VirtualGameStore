@@ -15,6 +15,8 @@ using VirtualGameStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using System.Net;
 
 namespace VirtualGameStore.Controllers
 {
@@ -47,19 +49,21 @@ namespace VirtualGameStore.Controllers
                     {
                         if (u.Password.Equals(model.Password))
                         {
+                            string isAdmin = "";
                             if (u.Usertype.Equals("99"))
                             {
-                                HttpContext.Session.SetString("DisplayName", u.DisplayName);
-                                HttpContext.Session.SetString("isAdmin", "true");
-                                HttpContext.Session.SetString("Userid", Convert.ToString(u.Userid));
-                                ViewBag.isAdmin = "true";
+                                isAdmin = "true";
                             }
                             else
                             {
-                                HttpContext.Session.SetString("isAdmin", "false");
+                                isAdmin = "false";
                             }
+
+                            HttpContext.Session.SetString("DisplayName", u.DisplayName);
+                            HttpContext.Session.SetString("isAdmin", isAdmin);
+                            HttpContext.Session.SetString("Userid", Convert.ToString(u.Userid));
+
                             return RedirectToAction("Index", "Home");
-                            HttpContext.Session.SetString("userId", Convert.ToString(u.Userid));
                         }
                         else
                         {
@@ -109,7 +113,7 @@ namespace VirtualGameStore.Controllers
                     User editUser = null;
                     foreach (var u in users as IEnumerable<User>)
                     {
-                        if (u.Password.Equals(model.Password))
+                        if (!u.Password.Equals(model.Password))
                         {
                             editUser = u;
                         }
@@ -122,6 +126,8 @@ namespace VirtualGameStore.Controllers
                         _context.Update(editUser);
                         await _context.SaveChangesAsync();
 
+                        //sendMail(editUser.Email, editUser.Password);
+                        ViewData["message"] = "Password Changed";
                         return RedirectToAction("ResetPasswordConfirmation", "Access");
                     }
                 }
@@ -140,7 +146,30 @@ namespace VirtualGameStore.Controllers
 
             // Don't reveal that the user does not exist
             return RedirectToAction("ResetPassword", "Access");
-
         }
+
+        /*public void sendMail(string to, string password)
+        {
+            var body = "<p>Email From: {0} ({1})</p><p>Password:</p><p>{2}</p>";
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(to));  // replace with valid value 
+            message.From = new MailAddress("mccourt737@gmail.com");  // replace with valid value
+            message.Subject = "Password Reset";
+            message.Body = string.Format(body, "noreply", "noreply@vgamestore.com", password);
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+
+                var credential = new NetworkCredential();
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = credential;
+
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                smtp.Send(message);
+            }
+        }*/
     }
 }

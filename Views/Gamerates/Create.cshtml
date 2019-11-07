@@ -12,44 +12,18 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Userid" type="hidden" value="@ViewData["UserId"]" />
+            <input asp-for="Gameid" type="hidden" value="@ViewData["GameId"]" />
             <div class="form-group">
-                <label asp-for="Userid" class="control-label"></label>
-                <select asp-for="Userid" class ="form-control" asp-items="ViewBag.Userid"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gameid" class="control-label"></label>
-                <select asp-for="Gameid" class ="form-control" asp-items="ViewBag.Gameid"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rates" class="control-label"></label>
-                <input asp-for="Rates" class="form-control" />
+                <label asp-for="Rates" class="control-label">Rating</label>
+                <input type="number" asp-for="Rates" class="form-control" />
                 <span asp-validation-for="Rates" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" /></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="CreatedDatetime" class="control-label"></label>
-                <input asp-for="CreatedDatetime" class="form-control" />
-                <span asp-validation-for="CreatedDatetime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedUserid" class="control-label"></label>
-                <input asp-for="CreatedUserid" class="form-control" />
-                <span asp-validation-for="CreatedUserid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedDatetime" class="control-label"></label>
-                <input asp-for="UpdatedDatetime" class="form-control" />
-                <span asp-validation-for="UpdatedDatetime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedUserid" class="control-label"></label>
-                <input asp-for="UpdatedUserid" class="form-control" />
-                <span asp-validation-for="UpdatedUserid" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

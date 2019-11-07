@@ -67,12 +67,22 @@ namespace VirtualGameStore.Controllers
             ViewBag.Message = "";
             if (ModelState.IsValid)
             {
+
+                var displayCheck = await _context.User
+                    .FirstOrDefaultAsync(m => m.DisplayName == user.DisplayName);
+
+                if (displayCheck != null)
+                {
+                    ViewBag.Message = "Display Name already exists";
+                    return View(user);
+                }
+
                 var ux = await _context.User
                 .FirstOrDefaultAsync(m => m.Email == user.Email);
                 if (ux != null)
                 {
-                    ViewBag.Message = "Email is already exists";
-                    return View(user); ;
+                    ViewBag.Message = "Email already exists";
+                    return View(user);
                 }
 
                 user.StartDate = DateTime.Now;
@@ -136,6 +146,58 @@ namespace VirtualGameStore.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+
+        // GET: Users/Edit/5
+        public async Task<IActionResult> Update(decimal? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(decimal id, [Bind("Userid,DisplayName,StartDate,EndDate,TryCount,LockDatetime,Password,Usertype,ReceiveEmail,Email,FirstName,LastName,Gender,BirthDate,PostCode,Country,Province,City,Address,Address2,CellPhone,HomePhone,OfficePhone,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] User user)
+        {
+            if (id != user.Userid)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    user.UpdatedDatetime = DateTime.Now;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.Userid))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index), "Home");
             }
             return View(user);
         }

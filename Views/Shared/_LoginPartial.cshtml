@@ -28,7 +28,7 @@
         <form asp-controller="Access" asp-action="Logout" method="post" id="logoutForm" style="float: right !important; margin-right: 1px !important;">
             <ul class="nav navbar-nav navbar-right" style="float: right !important; margin-right: 1px !important;">
                 <li>
-                    <a asp-controller="Users" asp-action="Edit" asp-route-id="@userid" title="Manage">Hello @displayName!</a>
+                    <a asp-controller="Users" asp-action="Update" asp-route-id="@userid" title="Manage">Hello @displayName!</a>
                 </li>
                 <li>
                     <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>

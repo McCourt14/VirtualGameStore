@@ -13,25 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Access)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>*@
-            <th>
                 @Html.DisplayNameFor(model => model.Game)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.Game.Price)
             </th>
             <th></th>
         </tr>
@@ -40,30 +25,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Access)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>*@
-            <td>
                 @Html.DisplayFor(modelItem => item.Game.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Usertype)
+                @Html.DisplayFor(modelItem => item.Game.Price)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Wishlistid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Wishlistid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Wishlistid">Delete</a>
+                <a asp-action="Remove" asp-route-id="@item.Wishlistid">Remove</a>
             </td>
         </tr>
 }

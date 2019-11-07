@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
@@ -17,6 +18,7 @@ namespace VirtualGameStore.Models
         public string CeoName { get; set; }
         [Required(ErrorMessage = "Please enter Company Name")]
         [MaxLength(150)]
+        [DisplayName("Company Name")]
         public string CompanyName { get; set; }
         [MaxLength(10)]
         public string PostCode { get; set; }
