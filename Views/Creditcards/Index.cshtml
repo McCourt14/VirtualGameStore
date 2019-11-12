@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Creditcard>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Credit Cards";
 }
 
-<h2>List of Credit Cards</h2>
+<h2>Credit Cards</h2>
 
 <p>
-    <a asp-action="Create">Add New Credit Card</a>
+    <a asp-action="Create" id="createCard">Add New Credit Card</a>
 </p>
 <table class="table">
     <thead>
@@ -62,7 +62,6 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Cardid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Cardid">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Cardid">Delete</a>
             </td>
         </tr>

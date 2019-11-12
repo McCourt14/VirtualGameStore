@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,44 +21,35 @@ namespace VirtualGameStore.Controllers
     public class WishlistsController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public WishlistsController(PROG3050Context context)
+        public WishlistsController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Wishlists
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Wishlist.Include(w => w.Game).Include(w => w.User);
+            string userIdString = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            int userId;
+
+            bool parsed = int.TryParse(userIdString, out userId);
+            if (!parsed)
+            {
+                userId = 0;
+            }
+
+            var pROG3050Context = _context.Wishlist.Include(w => w.Game).Include(w => w.User).Where(w => w.Userid == userId);
             return View(await pROG3050Context.ToListAsync());
-        }
-
-        // GET: Wishlists/Details/5
-        public async Task<IActionResult> Details(decimal? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var wishlist = await _context.Wishlist
-                .Include(w => w.Game)
-                .Include(w => w.User)
-                .FirstOrDefaultAsync(m => m.Wishlistid == id);
-            if (wishlist == null)
-            {
-                return NotFound();
-            }
-
-            return View(wishlist);
         }
 
         // GET: Wishlists/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title");
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName");
             return View();
         }
 
@@ -77,7 +69,7 @@ namespace VirtualGameStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", wishlist.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", wishlist.Userid);
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
             return View(wishlist);
         }
 
@@ -94,8 +86,9 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
+
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", wishlist.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", wishlist.Userid);
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
             return View(wishlist);
         }
 
@@ -161,6 +154,14 @@ namespace VirtualGameStore.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(decimal id)
+        {
+            var wishlist = await _context.Wishlist.FindAsync(id);
+            _context.Wishlist.Remove(wishlist);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Remove(decimal id)
         {
             var wishlist = await _context.Wishlist.FindAsync(id);
             _context.Wishlist.Remove(wishlist);

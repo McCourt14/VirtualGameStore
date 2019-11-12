@@ -5,6 +5,10 @@
 @inject UserManager<IdentityUser> UserManager
 @inject IHttpContextAccessor HttpContextAccessor
 
+@{ 
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
+    String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,105 +164,112 @@
         </div>*@
 
             <div class="mynav_navbar">
-                <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-                <div class="mynav_dropdown">
-                    <button class="mynav_dropbtn">
-                        Game..
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="mynav_dropdown-content">
-                        <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
-                        @*<a asp-area="" asp-controller="Gamerates" asp-action="Index">Game Rates</a>*@
-                        <a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a>
-                        <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                    </div>
-                </div>
-                <div class="mynav_dropdown">
-                    <button class="mynav_dropbtn">
-                        Event..
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="mynav_dropdown-content">
-                        <a asp-area="" asp-controller="Events" asp-action="Index">Events</a>
-                        <a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a>
-                    </div>
-                </div>
-                @{
-                    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
 
-                    if (displayName != null && displayName != "")
+                @{ if (displayName != null && displayName != "")
                     {
-                        <div class="mynav_dropdown">
-                            <button class="mynav_dropbtn">
-                                My Pages
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <div class="mynav_dropdown-content">
-                                <a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
-                                <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
-                                <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
-                                <a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
-                                <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
-                                <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>                            
+                        <a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
+                        @if (isAdmin != null && isAdmin.Equals("true"))
+                        {
+                            <div class="mynav_dropdown">
+                                <button class="mynav_dropbtn">
+                                    Game..
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="mynav_dropdown-content">
+                                    <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
+                                    <a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a>
+                                    <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                                </div>
                             </div>
-                        </div>
-                    }
-                }
+                        }
+                        else
+                        {
+                            <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
+                        }
+                        }
+                    }@*<div class="mynav_dropdown">
+                <button class="mynav_dropbtn">
+                    Event..
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="mynav_dropdown-content">
+                    <a asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                    <a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a>
+                </div>
+            </div>*@
+                    @{
+                        if (displayName != null && displayName != "")
+                        {
+                            <div class="mynav_dropdown">
+                                <button class="mynav_dropbtn">
+                                    My Pages
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="mynav_dropdown-content">
+                                    @*<a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>*@
+                                    <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
+                                    <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
+                                    @*<a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>*@
+                                    <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
+                                    <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>
+                                </div>
+                                    </div>
+                                }
+                            }
 
-                @{
-                    String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
-                    if (isAdmin != null && isAdmin.Equals("true"))
-                    {
-                        <div class="mynav_dropdown">
-                            <button class="mynav_dropbtn">
-                                Admin..
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <div class="mynav_dropdown-content">
-                                <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
-                                <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                            </div>
+                            @{
+
+                                if (isAdmin != null && isAdmin.Equals("true"))
+                                {
+                                    <div class="mynav_dropdown">
+                                        <button class="mynav_dropbtn">
+                                            Admin..
+                                            <i class="fa fa-caret-down"></i>
+                                        </button>
+                                        <div class="mynav_dropdown-content">
+                                            <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
+                                            <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <partial name="_LoginPartial" />&nbsp; &nbsp; &nbsp;
                         </div>
-                    }
-                }
-                <partial name="_LoginPartial" />&nbsp;&nbsp;&nbsp;
+                </div>
+            </nav>
+
+            <partial name="_CookieConsentPartial" />
+
+            <div class="container body-content">
+                @RenderBody()
+
+                <hr />
+                <footer>
+                    <p>&copy; 2019 - VirtualGameStore</p>
+                </footer>
             </div>
-        </div>
-    </nav>
 
-    <partial name="_CookieConsentPartial" />
+            <environment include="Development">
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+                <script src="~/js/site.js" asp-append-version="true"></script>
+            </environment>
+            <environment exclude="Development">
+                <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                        asp-fallback-test="window.jQuery"
+                        crossorigin="anonymous"
+                        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+                </script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                        crossorigin="anonymous"
+                        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+                </script>
+                <script src="~/js/site.min.js" asp-append-version="true"></script>
+            </environment>
 
-    <div class="container body-content">
-        @RenderBody()
-
-        <hr />
-        <footer>
-            <p>&copy; 2019 - VirtualGameStore</p>
-        </footer>
-    </div>
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
-</body>
-</html>
+            @RenderSection("Scripts", required: false)
+        </body>
+        </html>

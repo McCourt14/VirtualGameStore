@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,16 +22,27 @@ namespace VirtualGameStore.Controllers
     public class FavoritesController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public FavoritesController(PROG3050Context context)
+        public FavoritesController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Favorites
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Favorite.Include(f => f.Category).Include(f => f.Favorit).Include(f => f.Platform);
+            string userIdString = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            int userId;
+
+            bool parsed = int.TryParse(userIdString, out userId);
+            if (!parsed)
+            {
+                userId = 0;
+            }
+
+            var pROG3050Context = _context.Favorite.Include(f => f.Category).Include(f => f.Favorit).Include(f => f.Platform).Where(f => f.Userid == userId);
             return View(await pROG3050Context.ToListAsync());
         }
 
@@ -57,6 +70,7 @@ namespace VirtualGameStore.Controllers
         // GET: Favorites/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
             ViewData["Categoryid"] = new SelectList(_context.Category, "Categoryid", "Categoriname");
             ViewData["Favoritid"] = new SelectList(_context.User, "Userid", "DisplayName");
             ViewData["Platformid"] = new SelectList(_context.Platform, "Platformid", "Platformname");
@@ -167,6 +181,14 @@ namespace VirtualGameStore.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(decimal id)
+        {
+            var favorite = await _context.Favorite.FindAsync(id);
+            _context.Favorite.Remove(favorite);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Remove(decimal id)
         {
             var favorite = await _context.Favorite.FindAsync(id);
             _context.Favorite.Remove(favorite);

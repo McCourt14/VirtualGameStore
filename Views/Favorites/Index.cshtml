@@ -1,77 +1,47 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Favorite>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Favorites";
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
 }
 
-<h2>Favorites</h2>
+<h2>Your Favorites</h2>
 
 <p>
-    <a asp-action="Create">Add New Favorite</a>
+    <a asp-action="Create" id="createFav">Add New Favorite</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Userid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Favorit)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Platform)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Userid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Favoritid)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Categoriname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Platform.Platformname)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Favoritid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Favoritid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Favoritid">Delete</a>
-            </td>
-        </tr>
+@if (displayName != null && displayName != "")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Platform)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Categoriname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Platform.Platformname)
+                    </td>
+                    <td>
+                        <a asp-action="Remove" asp-route-id="@item.Favoritid">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+

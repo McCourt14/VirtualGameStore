@@ -32,6 +32,7 @@ namespace VirtualGameStore.Models
         [Range(0, 9999999999999999.99, ErrorMessage = "Invalid Price; Max 18 digits")]
         public decimal Price { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Launch Date")]
         public DateTime? LaunchDate { get; set; }
         [DisplayName("Platform")]
         public decimal? Platformid { get; set; }

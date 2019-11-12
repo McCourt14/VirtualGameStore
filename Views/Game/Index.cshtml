@@ -8,21 +8,27 @@
 @{
     ViewData["Title"] = "Game List";
     String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
+    String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
 }
 
 <h2>List of Games</h2>
 
-@if (displayName != null && displayName != "")
+@if (isAdmin != null && isAdmin.Equals("true"))
 {
     <p>
-        <a asp-action="Create">Add New Game</a>
+        <a asp-action="Create" id="createGame">Add New Game</a>
     </p>
 }
 
 @using (Html.BeginForm("Index", "Game", FormMethod.Get))
 {
-    @Html.TextBox("searching")<input type="submit" value="Search" />
+    @Html.TextBox("searching")<input type="submit" id="search" value="Search" />
 }
+<style>
+    .gameRow{
+        cursor:pointer;
+    }
+</style>
 
 <table class="table">
     <thead>
@@ -48,7 +54,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr onclick="location.href = '@(Url.Action("Details", "Game", new { id = item.Gameid }))'">
+            <tr class="gameRow" onclick="location.href = '@(Url.Action("Details", "Game", new { id = item.Gameid }))'">
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
@@ -64,7 +70,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Platform.Platformname)
                 </td>
-                @if (displayName != null && displayName != "")
+                @if (isAdmin != null && isAdmin.Equals("true"))
                 {
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
@@ -77,7 +83,11 @@
 </table>
 
 <p>
-    <a asp-action="Print">Game List Reports</a>
+    @if (isAdmin != null && isAdmin.Equals("true"))
+    {
+        <a asp-action="Print">Game List Reports</a>
+    }
+
     @if (ViewBag.PrintMessage != null)
     {
     <p>@ViewBag.PrintMessage</p>

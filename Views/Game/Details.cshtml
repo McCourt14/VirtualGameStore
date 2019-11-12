@@ -1,7 +1,11 @@
 ﻿@model VirtualGameStore.Models.Game
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Game Details";
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
+    String isAdmin = HttpContextAccessor.HttpContext.Session.GetString("isAdmin");
 }
 
 <h2>Details of @Html.DisplayFor(model => model.Title)</h2>
@@ -34,24 +38,35 @@
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Categoriname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Categoriname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Company.CompanyName)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Gameid">Edit</a> |
-    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Gameid">Buy</a> |
+    <a asp-controller="Cart" asp-action="Buy" asp-route-id="@Model.Gameid" id="addCart">Add to Cart</a> |
     <a asp-action="Index">Back to List</a>
 
 </div>
 
-<h2>Game Rates: @ViewBag.avgRates</h2>
+<h2>Overall Rating: @ViewBag.avgRates</h2>
 <p>
-    <a asp-controller="Gamerates" asp-action="Create" asp-route-Gameid="@Model.Gameid">Add New Game Rates</a>
+    <a asp-controller="Gamerates" id="rateGame" asp-action="Create" asp-route-Gameid="@Model.Gameid">Rate Game</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Display Name
+                User
             </th>
             <th>
                 Game Rates
@@ -65,22 +80,23 @@
     <tbody>
         @foreach (var item in Model.Gamerates)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rates)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Rateid">Edit</a> |*@
-                <a asp-controller="Gamerates" asp-action="Details" asp-route-id="@item.Rateid">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Rateid">Delete</a>*@
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rates)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if(isAdmin != null && isAdmin.Equals("true"))
+                    {
+                        <a asp-action="Remove" asp-controller="Gamerates" asp-route-id="@item.Rateid">Delete</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

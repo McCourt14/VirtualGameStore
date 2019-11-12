@@ -81,7 +81,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Gameid" />
-        <input type="submit" value="Delete" class="btn btn-default" OnClick="if(!confirm('Are you sure you want to delete this game?')) return false;" /> |
+        <input type="submit" id="submit" value="Delete" class="btn btn-default" OnClick="if(!confirm('Are you sure you want to delete this game?')) return false;" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
