@@ -25,62 +25,75 @@
     @Html.TextBox("searching")<input type="submit" id="search" value="Search" />
 }
 <style>
-    .gameRow{
-        cursor:pointer;
+    .gameRow {
+        cursor: pointer;
     }
 </style>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Platform)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="gameRow" onclick="location.href = '@(Url.Action("Details", "Game", new { id = item.Gameid }))'">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Categoriname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Platform.Platformname)
-                </td>
-                @if (isAdmin != null && isAdmin.Equals("true"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Gameid">Delete</a>
-                    </td>
-                }
+@if (Model.Count() != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Platform)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="gameRow" onclick="location.href = '@(Url.Action("Details", "Game", new { id = item.Gameid }))'">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Categoriname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Platform.Platformname)
+                    </td>
+                    @if (isAdmin != null && isAdmin.Equals("true"))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Gameid">Edit</a> |
+                            <a asp-action="Remove" asp-route-id="@item.Gameid">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>No Games Found</td>
+            </tr>
+        </tbody>
+    </table>
+}
 
 <p>
     @if (isAdmin != null && isAdmin.Equals("true"))

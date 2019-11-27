@@ -1,65 +1,43 @@
 ﻿@model IEnumerable<VirtualGameStore.Models.Friends>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
+    String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
     ViewData["Title"] = "Index";
 }
 
-<h2>List of Friends</h2>
+<h2>Friends</h2>
 
-<p>
-    <a asp-action="Create">Add New Friend</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.UpdatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDatetime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedUserid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDatetime)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.FriendUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.UpdatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDatetime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedUserid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.FriendUser.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.DisplayName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Friendid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Friendid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Friendid">Delete</a>
-            </td>
-        </tr>
+<p style="color:red;">@ViewBag.Message</p>
+@if (Model.Count() != 0)
+{
+    <table class="table">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FriendUser.DisplayName)
+                    </td>
+                    <td>
+                        <a asp-action="Delete" id="Delete" asp-route-id="@item.Friendid">Delete</a>
+                        | <input type="button" onclick="location.href = '@(Url.Action("View", "wishlists", new { id = item.FriendUserid}))'" value="View Friends Wishlist" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else
+{
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>No Friends Or Family Added</td>
+            </tr>
+        </tbody>
+    </table>
+}
+<input type="button" onclick="location.href = '@(Url.Action("Create", "Friends"))'" value="Add Friends" />

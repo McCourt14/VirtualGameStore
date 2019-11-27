@@ -1,0 +1,54 @@
+﻿@model IEnumerable<VirtualGameStore.Models.Event>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List Of Events</h2>
+
+<p>
+    <a asp-action="Create">Add New Event</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Eventname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Startdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enddate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegisterUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Eventname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Startdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enddate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisterUser.Usertype)
+                </td>
+                <td>
+                    <a asp-action="Edit" id="edit" asp-route-id="@item.Eventid">Edit</a> |
+                    <a asp-action="Delete" id="delete" asp-route-id="@item.Eventid">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

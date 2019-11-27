@@ -69,7 +69,7 @@ namespace VirtualGameStore.Controllers
                 return NotFound();
             }
 
-            var gamerates = _context.Gamerates.Where(c => c.Gameid == id).Include(c=>c.User);
+            var gamerates = _context.Gamerates.Where(c => c.Gameid == id).Where(g => g.pending == false).Include(c=>c.User);
             if (gamerates != null)
             {
                 game.Gamerates = gamerates.ToList();
@@ -193,31 +193,7 @@ namespace VirtualGameStore.Controllers
             return View(game);
         }
 
-        // GET: Game/Delete/5
-        public async Task<IActionResult> Delete(decimal? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var game = await _context.Game
-                .Include(g => g.Category)
-                .Include(g => g.Company)
-                .Include(g => g.Platform)
-                .FirstOrDefaultAsync(m => m.Gameid == id);
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            return View(game);
-        }
-
-        // POST: Game/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(decimal id)
+        public async Task<IActionResult> Remove(decimal id)
         {
             var game = await _context.Game.FindAsync(id);
             _context.Game.Remove(game);
@@ -281,6 +257,7 @@ namespace VirtualGameStore.Controllers
                 excelEngine.Dispose();
                 fileStream.Close();
 
+                
                 ViewBag.PrintMessage = "Game List Excel file is created: "+name;
             }
 

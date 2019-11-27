@@ -42,7 +42,7 @@ namespace VirtualGameStore.Controllers
                 userId = 0;
             }
 
-            var pROG3050Context = _context.Favorite.Include(f => f.Category).Include(f => f.Favorit).Include(f => f.Platform).Where(f => f.Userid == userId);
+            var pROG3050Context = _context.Favorite.Include(f => f.Category).Include(f => f.Platform).Where(f => f.Userid == userId);
             return View(await pROG3050Context.ToListAsync());
         }
 

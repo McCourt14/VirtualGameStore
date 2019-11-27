@@ -22,6 +22,7 @@ namespace VirtualGameStore.Models
         public decimal? CreatedUserid { get; set; }
         public DateTime? UpdatedDatetime { get; set; }
         public decimal? UpdatedUserid { get; set; }
+        public bool? pending { get; set; }
 
         public Game Game { get; set; }
         public User User { get; set; }

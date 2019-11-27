@@ -9,7 +9,6 @@ namespace VirtualGameStore.Models
     {
         public Game()
         {
-            Eventgame = new HashSet<Eventgame>();
             Gamerates = new HashSet<Gamerates>();
             Order = new HashSet<Order>();
             Wishlist = new HashSet<Wishlist>();
@@ -51,7 +50,6 @@ namespace VirtualGameStore.Models
 
         public Company Company { get; set; }
         public Platform Platform { get; set; }
-        public ICollection<Eventgame> Eventgame { get; set; }
         public ICollection<Gamerates> Gamerates { get; set; }
         public ICollection<Order> Order { get; set; }
         public ICollection<Wishlist> Wishlist { get; set; }

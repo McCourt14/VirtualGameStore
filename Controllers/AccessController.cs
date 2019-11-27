@@ -74,7 +74,7 @@ namespace VirtualGameStore.Controllers
                 }                
             }
 
-            ViewData["Message"] = "Incorrect Email or Password";
+            ViewBag.Message = "Incorrect Email or Password";
 
             return View(model);
         }
@@ -93,6 +93,7 @@ namespace VirtualGameStore.Controllers
 
         public ActionResult ResetPassword()
         {
+            ViewData["Messages"] = TempData["Message"];
             return View(nameof(ResetPassword));
         }
 
@@ -113,7 +114,7 @@ namespace VirtualGameStore.Controllers
                     User editUser = null;
                     foreach (var u in users as IEnumerable<User>)
                     {
-                        if (!u.Password.Equals(model.Password))
+                        if (u.Password.Equals(model.CurrentPassword))
                         {
                             editUser = u;
                         }
@@ -127,8 +128,8 @@ namespace VirtualGameStore.Controllers
                         await _context.SaveChangesAsync();
 
                         //sendMail(editUser.Email, editUser.Password);
-                        ViewData["message"] = "Password Changed";
-                        return RedirectToAction("ResetPasswordConfirmation", "Access");
+                        TempData["Message"] = "Password Changed";
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 catch (DbUpdateConcurrencyException)
@@ -145,6 +146,7 @@ namespace VirtualGameStore.Controllers
             }
 
             // Don't reveal that the user does not exist
+            TempData["Message"] = "Incorrect Email or Password";
             return RedirectToAction("ResetPassword", "Access");
         }
 

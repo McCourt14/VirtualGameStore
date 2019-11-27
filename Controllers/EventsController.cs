@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +21,39 @@ namespace VirtualGameStore.Controllers
     public class EventsController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public EventsController(PROG3050Context context)
+        public EventsController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Events
         public async Task<IActionResult> Index()
+        {
+            String userID = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+
+            ViewData["UserId"] = userID;
+            var registered = _context.Eventgame.Include(e => e.Event).Where(eg => eg.userid == Decimal.Parse(userID));
+
+            int[] checkArray = new int[registered.Count()];
+
+            int i = 0;
+            foreach(var item in registered)
+            {
+                checkArray[i] = (int)item.Eventid;
+                i++;
+            }
+
+            ViewBag.Registered = checkArray;
+
+            var pROG3050Context = _context.Event.Include(e => e.RegisterUser);
+            return View(await pROG3050Context.ToListAsync());
+        }
+
+        // GET: Events
+        public async Task<IActionResult> AdminIndex()
         {
             var pROG3050Context = _context.Event.Include(e => e.RegisterUser);
             return View(await pROG3050Context.ToListAsync());
@@ -72,7 +98,7 @@ namespace VirtualGameStore.Controllers
                 @event.UpdatedDatetime = DateTime.Now;
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminIndex));
             }
             ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName", @event.RegisterUserid);
             return View(@event);
@@ -126,7 +152,7 @@ namespace VirtualGameStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminIndex));
             }
             ViewData["RegisterUserid"] = new SelectList(_context.User, "Userid", "DisplayName", @event.RegisterUserid);
             return View(@event);
@@ -135,31 +161,10 @@ namespace VirtualGameStore.Controllers
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(decimal? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.Event
-                .Include(e => e.RegisterUser)
-                .FirstOrDefaultAsync(m => m.Eventid == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
-        }
-
-        // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(decimal id)
-        {
             var @event = await _context.Event.FindAsync(id);
             _context.Event.Remove(@event);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AdminIndex));
         }
 
         private bool EventExists(decimal id)

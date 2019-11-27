@@ -13,11 +13,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Favoritid" />
-            <div class="form-group">
-                <label asp-for="Userid" class="control-label"></label>
-                <input asp-for="Userid" class="form-control" />
-                <span asp-validation-for="Userid" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="Userid" />
             <div class="form-group">
                 <label asp-for="Categoryid" class="control-label"></label>
                 <select asp-for="Categoryid" class="form-control" asp-items="ViewBag.Categoryid"></select>
@@ -28,26 +24,6 @@
                 <select asp-for="Platformid" class="form-control" asp-items="ViewBag.Platformid"></select>
                 <span asp-validation-for="Platformid" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="CreatedDatetime" class="control-label"></label>
-                <input asp-for="CreatedDatetime" class="form-control" />
-                <span asp-validation-for="CreatedDatetime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedUserid" class="control-label"></label>
-                <input asp-for="CreatedUserid" class="form-control" />
-                <span asp-validation-for="CreatedUserid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedDatetime" class="control-label"></label>
-                <input asp-for="UpdatedDatetime" class="form-control" />
-                <span asp-validation-for="UpdatedDatetime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedUserid" class="control-label"></label>
-                <input asp-for="UpdatedUserid" class="form-control" />
-                <span asp-validation-for="UpdatedUserid" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

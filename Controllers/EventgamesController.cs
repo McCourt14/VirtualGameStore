@@ -29,7 +29,7 @@ namespace VirtualGameStore.Controllers
         // GET: Eventgames
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Eventgame.Include(e => e.Event).Include(e => e.Game);
+            var pROG3050Context = _context.Eventgame.Include(e => e.Event);
             return View(await pROG3050Context.ToListAsync());
         }
 
@@ -43,7 +43,6 @@ namespace VirtualGameStore.Controllers
 
             var eventgame = await _context.Eventgame
                 .Include(e => e.Event)
-                .Include(e => e.Game)
                 .FirstOrDefaultAsync(m => m.Eventgameid == id);
             if (eventgame == null)
             {
@@ -76,64 +75,26 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
+
             return View(eventgame);
         }
 
-        // GET: Eventgames/Edit/5
-        public async Task<IActionResult> Edit(decimal? id)
+        public async Task<IActionResult> Register(decimal userID,decimal eventID)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            Eventgame eventgame = new Eventgame();
 
-            var eventgame = await _context.Eventgame.FindAsync(id);
-            if (eventgame == null)
-            {
-                return NotFound();
-            }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
-            return View(eventgame);
-        }
-
-        // POST: Eventgames/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(decimal id, [Bind("Eventgameid,Eventid,Gameid,DiscountRate,CreatedDatetime,CreatedUserid,UpdatedDatetime,UpdatedUserid")] Eventgame eventgame)
-        {
-            if (id != eventgame.Eventgameid)
-            {
-                return NotFound();
-            }
+            eventgame.Eventid = eventID;
+            eventgame.userid = userID;
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    eventgame.UpdatedDatetime = DateTime.Now;
-                    _context.Update(eventgame);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventgameExists(eventgame.Eventgameid))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                eventgame.CreatedDatetime = DateTime.Now;
+                eventgame.UpdatedDatetime = DateTime.Now;
+                _context.Add(eventgame);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), "Events");
             }
-            ViewData["Eventid"] = new SelectList(_context.Event, "Eventid", "Eventname", eventgame.Eventid);
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", eventgame.Gameid);
+
             return View(eventgame);
         }
 
@@ -147,7 +108,6 @@ namespace VirtualGameStore.Controllers
 
             var eventgame = await _context.Eventgame
                 .Include(e => e.Event)
-                .Include(e => e.Game)
                 .FirstOrDefaultAsync(m => m.Eventgameid == id);
             if (eventgame == null)
             {

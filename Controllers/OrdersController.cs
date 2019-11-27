@@ -76,7 +76,7 @@ namespace VirtualGameStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Eventgameid"] = new SelectList(_context.Eventgame, "Eventgameid", "Eventgameid", order.Eventgameid);
+
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Description", order.Gameid);
             ViewData["Userid"] = new SelectList(_context.User, "Userid", "Password", order.Userid);
             return View(order);
@@ -95,7 +95,7 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Eventgameid"] = new SelectList(_context.Eventgame, "Eventgameid", "Eventgameid", order.Eventgameid);
+
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Description", order.Gameid);
             ViewData["Userid"] = new SelectList(_context.User, "Userid", "Password", order.Userid);
             return View(order);
@@ -133,7 +133,7 @@ namespace VirtualGameStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Eventgameid"] = new SelectList(_context.Eventgame, "Eventgameid", "Eventgameid", order.Eventgameid);
+
             ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Description", order.Gameid);
             ViewData["Userid"] = new SelectList(_context.User, "Userid", "Password", order.Userid);
             return View(order);

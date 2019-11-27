@@ -107,139 +107,64 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">VirtualGameStore</a>
             </div>
-            @*<div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a></li>
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Game...
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-controller="Game" asp-action="Index">Games</a><br />
-                        <a class="dropdown-item" asp-controller="Gamerates" asp-action="Index">Game Rates</a><br />
-                        <a class="dropdown-item" asp-controller="Platforms" asp-action="Index">Platforms</a><br />
-                        <a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Event...
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-controller="Events" asp-action="Index">Events</a><br />
-                        <a class="dropdown-item" asp-controller="Eventgames" asp-action="Index">Event Games</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        My Pages...
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" asp-controller="Favorites" asp-action="Index">Favorites</a><br />
-                        <a class="dropdown-item" asp-controller="Wishlists" asp-action="Index">Wish List</a><br />
-                        <a class="dropdown-item" asp-controller="Friends" asp-action="Index">Friends</a><br />
-                        <a class="dropdown-item" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
-                    </div>
-                </li>
-
-                @if (ViewBag.isAdmin != null && ViewBag.isAdmin.ToString() == "true")
-                {
-                    <li><a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="Index">Users</a></li>
-                    <li class="dropdown">
-
-                        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Security
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Index">User Management</a><br />
-                            <a class="dropdown-item" asp-controller="Roles" asp-action="Index">Role Management</a>
-                        </div>
-                    </li>
-                }
-            </ul>
-            <partial name="_LoginPartial" />
-        </div>*@
-
             <div class="mynav_navbar">
 
                 @{ if (displayName != null && displayName != "")
                     {
                         <a asp-area="" asp-controller="Cart" asp-action="Index">Cart</a>
-                        @if (isAdmin != null && isAdmin.Equals("true"))
-                        {
-                            <div class="mynav_dropdown">
-                                <button class="mynav_dropbtn">
-                                    Game..
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="mynav_dropdown-content">
-                                    <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
-                                    <a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a>
-                                    <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                                </div>
+                        <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
+                        <a asp-area="" asp-controller="Events" asp-action="Index">Upcoming Events</a>
+                    }
+                }
+                @{
+                    if (displayName != null && displayName != "")
+                    {
+                        <div class="mynav_dropdown">
+                            <button class="mynav_dropbtn">
+                                My Pages
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                @*<a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>*@
+                                <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
+                                <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
+                                <a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
+                                <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
+                                <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>
                             </div>
-                        }
-                        else
-                        {
-                            <a asp-area="" asp-controller="Game" asp-action="Index">Games</a>
-                        }
-                        }
-                    }@*<div class="mynav_dropdown">
-                <button class="mynav_dropbtn">
-                    Event..
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="mynav_dropdown-content">
-                    <a asp-area="" asp-controller="Events" asp-action="Index">Events</a>
-                    <a asp-area="" asp-controller="Eventgames" asp-action="Index">Event Games</a>
-                </div>
-            </div>*@
-                    @{
-                        if (displayName != null && displayName != "")
-                        {
-                            <div class="mynav_dropdown">
-                                <button class="mynav_dropbtn">
-                                    My Pages
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="mynav_dropdown-content">
-                                    @*<a asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>*@
-                                    <a asp-area="" asp-controller="Favorites" asp-action="Index">Favorites</a>
-                                    <a asp-area="" asp-controller="Wishlists" asp-action="Index">Wish List</a>
-                                    @*<a asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>*@
-                                    <a asp-area="" asp-controller="Creditcards" asp-action="Index">Credit Card</a>
-                                    <a asp-area="" asp-controller="Access" asp-action="ResetPassword">Change Password</a>
-                                </div>
-                                    </div>
-                                }
-                            }
-
-                            @{
-
-                                if (isAdmin != null && isAdmin.Equals("true"))
-                                {
-                                    <div class="mynav_dropdown">
-                                        <button class="mynav_dropbtn">
-                                            Admin..
-                                            <i class="fa fa-caret-down"></i>
-                                        </button>
-                                        <div class="mynav_dropdown-content">
-                                            <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
-                                            <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            <partial name="_LoginPartial" />&nbsp; &nbsp; &nbsp;
                         </div>
+                    }
+                }
+
+                @{
+
+                    if (isAdmin != null && isAdmin.Equals("true"))
+                    {
+                        <div class="mynav_dropdown">
+                            <button class="mynav_dropbtn">
+                                Admin..
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                <a asp-area="" asp-controller="GameRates" asp-action="Index">Pending Reviews</a>
+                                <a asp-area="" asp-controller="Events" asp-action="AdminIndex">Events</a>
+                                <a asp-area="" asp-controller="Companies" asp-action="Index">Companies</a>
+                                <a asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                <a asp-area="" asp-controller="Platforms" asp-action="Index">Platforms</a>
+                                <a asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <partial name="_LoginPartial" />&nbsp; &nbsp; &nbsp;
+            </div>
                 </div>
             </nav>
-
             <partial name="_CookieConsentPartial" />
-
+            <div>
+                <p id="messages" style="color:red; text-align:center"> @ViewBag.Message </p>
+            </div>
             <div class="container body-content">
                 @RenderBody()
 

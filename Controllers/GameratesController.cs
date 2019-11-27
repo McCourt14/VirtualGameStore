@@ -2,7 +2,7 @@
  * Project: PROG3050 - Virtual Game store Team Project
  * Purpose: game rates service
  * 
- * Created by Team on 2019.10.31
+ * Created by Team one 2019.10.31
  * 
  * 
  */
@@ -32,7 +32,7 @@ namespace VirtualGameStore.Controllers
         // GET: Gamerates
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Gamerates.Include(g => g.Game).Include(g => g.User);
+            var pROG3050Context = _context.Gamerates.Include(g => g.Game).Include(g => g.User).Where(g => g.pending == true);
             return View(await pROG3050Context.ToListAsync());
         }
 
@@ -75,6 +75,7 @@ namespace VirtualGameStore.Controllers
             {
                 gamerates.CreatedDatetime = DateTime.Now;
                 gamerates.UpdatedDatetime = DateTime.Now;
+                gamerates.pending = true;
                 _context.Add(gamerates);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
@@ -98,8 +99,7 @@ namespace VirtualGameStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Title", gamerates.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "DisplayName", gamerates.Userid);
+
             return View(gamerates);
         }
 
@@ -141,35 +141,39 @@ namespace VirtualGameStore.Controllers
             return View(gamerates);
         }
 
-        // GET: Gamerates/Delete/5
-        public async Task<IActionResult> Delete(decimal? id)
+        // GET: Gamerates/Edit/5
+        public async Task<IActionResult> Approve(decimal id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var gamerates = await _context.Gamerates.FindAsync(id);
 
-            var gamerates = await _context.Gamerates
-                .Include(g => g.Game)
-                .Include(g => g.User)
-                .FirstOrDefaultAsync(m => m.Rateid == id);
             if (gamerates == null)
             {
                 return NotFound();
             }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    gamerates.pending = false;
+                    gamerates.UpdatedDatetime = DateTime.Now;
+                    _context.Update(gamerates);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!GameratesExists(gamerates.Rateid))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                
+            }
 
-            return View(gamerates);
-        }
-
-        // POST: Gamerates/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(decimal id)
-        {
-            var gamerates = await _context.Gamerates.FindAsync(id);
-            _context.Gamerates.Remove(gamerates);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Remove(decimal id)
@@ -178,6 +182,14 @@ namespace VirtualGameStore.Controllers
             _context.Gamerates.Remove(gamerates);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", "Game", new { id = gamerates.Gameid });
+        }
+
+        public async Task<IActionResult> RemovePending(decimal id)
+        {
+            var gamerates = await _context.Gamerates.FindAsync(id);
+            _context.Gamerates.Remove(gamerates);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool GameratesExists(decimal id)

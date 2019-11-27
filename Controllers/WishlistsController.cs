@@ -45,6 +45,13 @@ namespace VirtualGameStore.Controllers
             return View(await pROG3050Context.ToListAsync());
         }
 
+        // GET: Wishlists
+        public async Task<IActionResult> View(decimal id)
+        {
+            var pROG3050Context = _context.Wishlist.Include(w => w.Game).Include(w => w.User).Where(w => w.Userid == id);
+            return View(await pROG3050Context.ToListAsync());
+        }
+
         // GET: Wishlists/Create
         public IActionResult Create()
         {

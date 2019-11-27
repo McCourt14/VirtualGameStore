@@ -252,16 +252,12 @@ namespace VirtualGameStore.Models
                     .HasColumnName("created_userid")
                     .HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.DiscountRate)
-                    .HasColumnName("discount_rate")
-                    .HasColumnType("numeric(18, 2)");
-
                 entity.Property(e => e.Eventid)
                     .HasColumnName("eventid")
                     .HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.Gameid)
-                    .HasColumnName("gameid")
+                entity.Property(e => e.userid)
+                    .HasColumnName("userid")
                     .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.UpdatedDatetime)
@@ -277,12 +273,6 @@ namespace VirtualGameStore.Models
                     .HasForeignKey(d => d.Eventid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_eventgame_event");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.Eventgame)
-                    .HasForeignKey(d => d.Gameid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_eventgame_game");
             });
 
             modelBuilder.Entity<Favorite>(entity =>
@@ -528,10 +518,6 @@ namespace VirtualGameStore.Models
                     .HasColumnName("discount_rate")
                     .HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.Eventgameid)
-                    .HasColumnName("eventgameid")
-                    .HasColumnType("numeric(18, 0)");
-
                 entity.Property(e => e.Gameid)
                     .HasColumnName("gameid")
                     .HasColumnType("numeric(18, 0)");
@@ -551,11 +537,6 @@ namespace VirtualGameStore.Models
                 entity.Property(e => e.Userid)
                     .HasColumnName("userid")
                     .HasColumnType("numeric(18, 0)");
-
-                entity.HasOne(d => d.Eventgame)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.Eventgameid)
-                    .HasConstraintName("FK_order_eventgame");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.Order)

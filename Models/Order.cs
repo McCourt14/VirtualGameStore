@@ -19,8 +19,6 @@ namespace VirtualGameStore.Models
         public decimal? Gameid { get; set; }
         [DisplayName("Credit card")]
         public decimal? Cardid { get; set; }
-        [DisplayName("Event Game")]
-        public decimal? Eventgameid { get; set; }
         [DisplayName("Discount Rate")]
         public decimal? DiscountRate { get; set; }
 

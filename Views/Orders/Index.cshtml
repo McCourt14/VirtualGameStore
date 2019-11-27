@@ -28,9 +28,6 @@
                 @Html.DisplayNameFor(model => model.DiscountRate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Eventgame)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Game)
             </th>
             <th>
@@ -57,9 +54,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DiscountRate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Eventgame.Eventgameid)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Game.Description)
             </td>
@@ -67,9 +62,7 @@
                 @Html.DisplayFor(modelItem => item.User.FirstName + " " + item.User.LastName)
             </td>
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Orderid">Edit</a> |*@
                 <a asp-action="Details" asp-route-id="@item.Orderid">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.Orderid">Delete</a>*@
             </td>
         </tr>
 }

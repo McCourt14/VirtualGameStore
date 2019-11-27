@@ -68,8 +68,10 @@ namespace VirtualGameStore.Models
         [MaxLength(50)]
         public string City { get; set; }
         [MaxLength(150)]
+        [DisplayName("Mailing Address")]
         public string Address { get; set; }
         [MaxLength(150)]
+        [DisplayName("Shipping Address")]
         public string Address2 { get; set; }
         [MaxLength(50)]
         public string CellPhone { get; set; }

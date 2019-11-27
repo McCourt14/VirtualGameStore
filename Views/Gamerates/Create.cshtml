@@ -15,7 +15,7 @@
             <input asp-for="Userid" type="hidden" value="@ViewData["UserId"]" />
             <input asp-for="Gameid" type="hidden" value="@ViewData["GameId"]" />
             <div class="form-group">
-                <label asp-for="Rates" class="control-label">Rating</label>
+                <label asp-for="Rates" class="control-label">Rating (0-100)</label>
                 <input type="number" id="rate" asp-for="Rates" class="form-control" />
                 <span asp-validation-for="Rates" class="text-danger"></span>
             </div>

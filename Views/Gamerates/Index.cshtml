@@ -4,74 +4,60 @@
     ViewData["Title"] = "Game Rates";
 }
 
-<h2>Gamerates</h2>
-
-<p>
-    <a asp-action="Create">Add New Game Rates</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Game)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User.DisplayName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rates)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            @*<th>
-            @Html.DisplayNameFor(model => model.CreatedDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedUserid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedDatetime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedUserid)
-        </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Game.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rates)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.CreatedDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedUserid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedDatetime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedUserid)
-        </td>*@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Rateid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Rateid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Rateid">Delete</a>
-            </td>
-        </tr>
+<h2>Pending Game Ratings</h2>
+@if (Model.Count() != 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Game)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.User.DisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rates)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Game.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.DisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rates)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a asp-action="Approve" asp-route-id="@item.Rateid">Approve</a> |
+                        <a asp-action="RemovePending" asp-route-id="@item.Rateid">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else
+{
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>No Pending Reviews</td>
+            </tr>
+        </tbody>
+    </table>
+}
+

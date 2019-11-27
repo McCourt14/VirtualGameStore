@@ -28,6 +28,7 @@ namespace VirtualGameStore.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Message"] = TempData["Message"];
             IdentityUser identityUser = _userManager.GetUserAsync(User).Result;
             if (User.Identity.IsAuthenticated && _userManager.IsInRoleAsync(identityUser, "administrators").Result)
             {

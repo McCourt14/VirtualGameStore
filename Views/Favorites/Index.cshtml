@@ -7,6 +7,12 @@
     String displayName = HttpContextAccessor.HttpContext.Session.GetString("DisplayName");
 }
 
+<style>
+    .favRow {
+        cursor: pointer;
+    }
+</style>
+
 <h2>Your Favorites</h2>
 
 <p>
@@ -29,7 +35,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="favRow" onclick="location.href = '@(Url.Action("Edit", "Favorites", new { id = item.Favoritid }))'">
                     <td>
                         @Html.DisplayFor(modelItem => item.Category.Categoriname)
                     </td>
