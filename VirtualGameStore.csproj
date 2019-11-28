@@ -18,6 +18,12 @@
     <Content Update="Views\Events\AdminIndex.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Orders\Confirmation.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Orders\Checkout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Users\Update.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

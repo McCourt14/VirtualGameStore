@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,16 +21,22 @@ namespace VirtualGameStore.Controllers
     public class OrdersController : Controller
     {
         private readonly PROG3050Context _context;
+        private IHttpContextAccessor _HttpContextAccessor;
 
-        public OrdersController(PROG3050Context context)
+        public OrdersController(PROG3050Context context, IHttpContextAccessor HttpContextAccessor)
         {
             _context = context;
+            _HttpContextAccessor = HttpContextAccessor;
         }
 
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var pROG3050Context = _context.Order.Include(o => o.Eventgame).Include(o => o.Game).Include(o => o.User);
+            var userID = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            ViewData["UserId"] = userID;
+
+            var pROG3050Context = _context.Order.Include(o => o.Eventgame).Include(o => o.Game).Include(o => o.User)
+                .Include(o => o.Card).OrderByDescending(o => o.OrderDate).Where(o => o.Userid == Decimal.Parse(userID));
             return View(await pROG3050Context.ToListAsync());
         }
 
@@ -55,11 +62,10 @@ namespace VirtualGameStore.Controllers
         }
 
         // GET: Orders/Create
-        public IActionResult Create()
+        public IActionResult Checkout()
         {
-            ViewData["Eventgameid"] = new SelectList(_context.Eventgame, "Eventgameid", "Eventgameid");
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Description");
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Password");
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            ViewBag.Cardid = new SelectList(_context.Creditcard, "Cardid", "Cardnumber");
             return View();
         }
 
@@ -68,18 +74,39 @@ namespace VirtualGameStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Orderid,OrderDate,Userid,OrderCount,OrderPrice,Gameid,Cardid,Eventgameid,DiscountRate")] Order order)
+        public IActionResult Checkout([Bind("Orderid,OrderDate,Userid,OrderCount,OrderPrice,Gameid,Cardid,Eventgameid,DiscountRate")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                List<Item> cart = getCartSession();
+
+                foreach(var game in cart)
+                {
+                    Order saveOrder = new Order();
+
+                    saveOrder.Userid = order.Userid;
+                    saveOrder.Cardid = order.Cardid;
+                    saveOrder.Gameid = game.Game.Gameid;
+                    saveOrder.OrderPrice = game.Game.Price * game.Quantity;
+                    saveOrder.OrderCount = game.Quantity;
+                    saveOrder.OrderDate = DateTime.Now;
+
+                    _context.Add(saveOrder);
+                    _context.SaveChanges();
+                }
+
+                HttpContext.Session.Remove("cart");
+                return RedirectToAction(nameof(Confirmation));
             }
 
-            ViewData["Gameid"] = new SelectList(_context.Game, "Gameid", "Description", order.Gameid);
-            ViewData["Userid"] = new SelectList(_context.User, "Userid", "Password", order.Userid);
+            ViewData["UserId"] = _HttpContextAccessor.HttpContext.Session.GetString("Userid");
+            ViewBag.Cardid = new SelectList(_context.Creditcard, "Cardid", "Cardnumber");
             return View(order);
+        }
+
+        public IActionResult Confirmation()
+        {
+            return View();
         }
 
         // GET: Orders/Edit/5
@@ -174,6 +201,30 @@ namespace VirtualGameStore.Controllers
         private bool OrderExists(decimal id)
         {
             return _context.Order.Any(e => e.Orderid == id);
+        }
+
+        public List<Item> getCartSession()
+        {
+            List<Item> carts = new List<Item>();
+            String cart = HttpContext.Session.GetString("cart");
+            String[] rows = cart.Split(",");
+            foreach (String row in rows)
+            {
+                if (!row.Equals(""))
+                {
+                    String[] items = row.Split(";");
+                    Game g = new Game();
+                    g.Gameid = Convert.ToDecimal(items[0]);
+                    g.Title = items[1];
+                    g.Price = Convert.ToDecimal(items[2]);
+                    int q = Convert.ToInt32(items[3]);
+
+                    Item item = new Item { Game = g, Quantity = q };
+
+                    carts.Add(item);
+                }
+            }
+            return carts;
         }
     }
 }

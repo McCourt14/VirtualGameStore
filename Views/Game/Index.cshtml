@@ -94,15 +94,3 @@ else
         </tbody>
     </table>
 }
-
-<p>
-    @if (isAdmin != null && isAdmin.Equals("true"))
-    {
-        <a asp-action="Print">Game List Reports</a>
-    }
-
-    @if (ViewBag.PrintMessage != null)
-    {
-    <p>@ViewBag.PrintMessage</p>
-}
-    </p>

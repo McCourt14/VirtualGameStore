@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualGameStore.Models
 {
@@ -17,6 +18,7 @@ namespace VirtualGameStore.Models
         public decimal? OrderPrice { get; set; }
         [DisplayName("Game")]
         public decimal? Gameid { get; set; }
+        [Required]
         [DisplayName("Credit card")]
         public decimal? Cardid { get; set; }
         [DisplayName("Discount Rate")]
@@ -25,5 +27,6 @@ namespace VirtualGameStore.Models
         public Eventgame Eventgame { get; set; }
         public Game Game { get; set; }
         public User User { get; set; }
+        public Creditcard Card { get; set; }
     }
 }

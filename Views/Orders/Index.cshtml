@@ -4,11 +4,8 @@
     ViewData["Title"] = "Orders";
 }
 
-<h2>Index</h2>
+<h2>Your Orders</h2>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -22,16 +19,10 @@
                 @Html.DisplayNameFor(model => model.OrderPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cardid)
+                @Html.DisplayNameFor(model => model.Card.Cardnumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DiscountRate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Game)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.Game.Title)
             </th>
             <th></th>
         </tr>
@@ -49,20 +40,13 @@
                 @Html.DisplayFor(modelItem => item.OrderPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cardid)
+                @Html.DisplayFor(modelItem => item.Card.Cardnumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DiscountRate)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Game.Description)
+                @Html.DisplayFor(modelItem => item.Game.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName + " " + item.User.LastName)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Orderid">Details</a> |
+                <a asp-action="Download" asp-controller="Game" asp-route-id="@item.Game.Title">Download</a>
             </td>
         </tr>
 }

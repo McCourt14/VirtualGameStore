@@ -508,7 +508,8 @@ namespace VirtualGameStore.Models
 
                 entity.Property(e => e.Orderid)
                     .HasColumnName("orderid")
-                    .HasColumnType("numeric(18, 0)");
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd(); ;
 
                 entity.Property(e => e.Cardid)
                     .HasColumnName("cardid")

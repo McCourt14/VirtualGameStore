@@ -1,0 +1,17 @@
+﻿@model VirtualGameStore.Models.Order
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using VirtualGameStore.Models;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+<h2>Purchase Complete</h2>
+<br />
+<h3><a asp-action="Index" asp-controller="Orders">Download Purchased Games</a></h3>
